@@ -89,8 +89,8 @@ export default {
           to: { height: "0" },
         },
         "pulse-glow": {
-          "0%, 100%": { boxShadow: "0 0 20px hsl(0 85% 50% / 0.4)" },
-          "50%": { boxShadow: "0 0 40px hsl(0 85% 50% / 0.6)" },
+          "0%, 100%": { boxShadow: "0 0 15px hsl(0 65% 42% / 0.3)" },
+          "50%": { boxShadow: "0 0 30px hsl(0 65% 42% / 0.5)" },
         },
         "fade-in": {
           "0%": { opacity: "0", transform: "translateY(10px)" },
@@ -104,8 +104,8 @@ export default {
         "fade-in": "fade-in 0.5s ease-out",
       },
       boxShadow: {
-        glow: "0 0 30px hsl(0 85% 50% / 0.3)",
-        "glow-lg": "0 0 50px hsl(0 85% 50% / 0.4)",
+        glow: "0 0 20px hsl(0 65% 42% / 0.25)",
+        "glow-lg": "0 0 35px hsl(0 65% 42% / 0.3)",
       },
     },
   },
