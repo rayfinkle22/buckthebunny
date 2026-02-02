@@ -48,7 +48,7 @@ export const Header = () => {
           <div className="flex items-center gap-2">
             {/* Market Cap Display */}
             <div className="flex items-center px-3 h-8 rounded-md bg-primary/20 border border-primary/30">
-              <span className="font-display text-sm sm:text-base text-primary">
+              <span className="font-display text-sm sm:text-base text-foreground">
                 {isLoading ? (
                   <span className="opacity-50">...</span>
                 ) : marketCap ? (
