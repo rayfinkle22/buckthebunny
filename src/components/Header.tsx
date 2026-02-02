@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMarketData, formatMarketCap, TOKEN_ADDRESS } from "@/hooks/useMarketData";
 import { Menu, X, ChartLine, Home, Rocket } from "lucide-react";
-import buckLogo from "@/assets/hero-banner.jpeg";
+import buckLogo from "@/assets/buck-logo.jpeg";
 
 const navItems = [
   { id: "hero", label: "Home", icon: Home },
