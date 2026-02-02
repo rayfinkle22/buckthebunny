@@ -91,7 +91,7 @@ export const Header = () => {
                         className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-primary/20 transition-all text-left"
                         onClick={() => setMenuOpen(false)}
                       >
-                        {item.icon && <item.icon className="w-4 h-4 text-primary" />}
+                        {item.icon && <item.icon className="w-4 h-4 text-foreground" />}
                         <span className="font-body text-sm text-foreground">{item.label}</span>
                       </Link>
                     ) : (
@@ -104,7 +104,7 @@ export const Header = () => {
                         onClick={() => setMenuOpen(false)}
                       >
                         {item.icon ? (
-                          <item.icon className="w-4 h-4 text-primary" />
+                          <item.icon className="w-4 h-4 text-foreground" />
                         ) : (
                           <XIcon />
                         )}
@@ -117,7 +117,7 @@ export const Header = () => {
                       onClick={() => scrollToSection(item.id)}
                       className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-primary/20 transition-all text-left"
                     >
-                      {item.icon && <item.icon className="w-4 h-4 text-primary" />}
+                      {item.icon && <item.icon className="w-4 h-4 text-foreground" />}
                       <span className="font-body text-sm text-foreground">{item.label}</span>
                     </button>
                   )
