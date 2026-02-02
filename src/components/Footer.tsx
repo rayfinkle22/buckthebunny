@@ -57,9 +57,13 @@ export const Footer = () => {
           This is a meme token with no intrinsic value. Trade responsibly. Not financial advice. DYOR. 🧠
         </p>
 
-        <div className="flex items-center justify-center text-muted-foreground/50">
+        <div className="flex items-center justify-center text-muted-foreground/50 mb-4">
           <span className="font-body text-xs">Built on Solana</span>
         </div>
+
+        <p className="font-body text-[10px] text-muted-foreground/40 max-w-lg mx-auto leading-relaxed">
+          This is a fan-made, community-driven project and does not claim ownership of Buck the Bunny. Buck the Bunny is the intellectual property of GameStop, and this project is not affiliated with or endorsed by GameStop.
+        </p>
       </div>
     </footer>
   );
