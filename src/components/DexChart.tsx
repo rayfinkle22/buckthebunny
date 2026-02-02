@@ -20,7 +20,7 @@ export const DexChart = () => {
           <div className="grid grid-cols-3 gap-4">
             <div className="text-center">
               <p className="font-body text-sm text-muted-foreground mb-1">Market Cap</p>
-              <p className="font-display text-2xl sm:text-3xl text-primary">
+              <p className="font-display text-2xl sm:text-3xl text-foreground">
                 {isLoading ? (
                   <span className="opacity-50">...</span>
                 ) : marketCap ? (
@@ -79,7 +79,7 @@ export const DexChart = () => {
             href={`https://dexscreener.com/solana/${TOKEN_ADDRESS}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="font-body text-primary hover:text-accent transition-colors inline-flex items-center gap-2 underline underline-offset-2"
+            className="font-body text-foreground hover:text-primary transition-colors inline-flex items-center gap-2 underline underline-offset-2"
           >
             View full chart on Dexscreener →
           </a>
