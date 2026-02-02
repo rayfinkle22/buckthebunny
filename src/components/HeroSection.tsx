@@ -37,6 +37,9 @@ export const HeroSection = () => {
             alt="Buck the Bunny"
             className="w-full max-w-4xl mx-auto rounded-2xl shadow-glow-lg border-2 border-primary/30"
           />
+          <p className="font-body text-sm sm:text-base text-muted-foreground mt-3 sm:mt-4">
+            GameStop's iconic Rabbit Mascot. Tokenized on Pump.fun
+          </p>
         </div>
 
         {/* Title */}
