@@ -91,6 +91,23 @@ export const HeroSection = () => {
               asChild
             >
               <a
+                href="https://x.com/itsbuckthebunny"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <XIcon />
+                <span>OFFICIAL X</span>
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
+              </a>
+            </Button>
+
+            <Button
+              variant="heroOutline"
+              size="lg"
+              asChild
+            >
+              <a
                 href="https://x.com/i/communities/1960729088890691700"
                 target="_blank"
                 rel="noopener noreferrer"

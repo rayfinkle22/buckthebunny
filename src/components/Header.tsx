@@ -8,6 +8,8 @@ const navItems = [
   { id: "hero", label: "Home", icon: Home },
   { id: "chart", label: "Chart", icon: ChartLine },
   { id: "pumpfun", label: "Pump.fun", icon: Rocket, href: `https://pump.fun/coin/${TOKEN_ADDRESS}` },
+  { id: "official-x", label: "Official X", icon: null, href: "https://x.com/itsbuckthebunny" },
+  { id: "x-community", label: "X Community", icon: null, href: "https://x.com/i/communities/1960729088890691700" },
 ];
 
 const XIcon = () => (
@@ -100,7 +102,11 @@ export const Header = () => {
                       className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-primary/20 transition-all text-left"
                       onClick={() => setMenuOpen(false)}
                     >
-                      <item.icon className="w-4 h-4 text-primary" />
+                      {item.icon ? (
+                        <item.icon className="w-4 h-4 text-primary" />
+                      ) : (
+                        <XIcon />
+                      )}
                       <span className="font-body text-sm text-foreground">{item.label}</span>
                     </a>
                   ) : (
@@ -109,7 +115,7 @@ export const Header = () => {
                       onClick={() => scrollToSection(item.id)}
                       className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-primary/20 transition-all text-left"
                     >
-                      <item.icon className="w-4 h-4 text-primary" />
+                      {item.icon && <item.icon className="w-4 h-4 text-primary" />}
                       <span className="font-body text-sm text-foreground">{item.label}</span>
                     </button>
                   )
