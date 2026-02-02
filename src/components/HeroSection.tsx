@@ -129,6 +129,17 @@ export const HeroSection = () => {
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
               Today, Buck is making a modern comeback through a community-driven memecoin that celebrates both the character and his creator, ensuring the artist who brought Buck to life is finally recognized and rewarded, with all creator fees going directly to Dustin Clause Harder.
             </p>
+            
+            {/* YouTube Video Embed */}
+            <div className="mt-6 sm:mt-8 w-full aspect-video max-w-2xl mx-auto rounded-xl overflow-hidden border-2 border-primary/30 shadow-glow">
+              <iframe
+                className="w-full h-full"
+                src="https://www.youtube.com/embed/IMpHml429_8"
+                title="Buck the Bunny Origin Story"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowFullScreen
+              />
+            </div>
           </div>
         </div>
       </div>
