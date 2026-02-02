@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Copy, Check, ExternalLink } from "lucide-react";
+import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { TOKEN_ADDRESS } from "@/hooks/useMarketData";
 import heroBanner from "@/assets/hero-banner.jpeg";
 import buckEmoji from "@/assets/buck-emoji.png";
 
 const XIcon = () => (
-  <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5 fill-current">
+  <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current">
     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
   </svg>
 );
@@ -49,75 +48,47 @@ export const HeroSection = () => {
 
         {/* Buttons Section */}
         <div className="flex flex-col items-center gap-4 sm:gap-6">
-          {/* DEX and Community buttons */}
-          <div className="flex gap-3 sm:gap-4 flex-wrap justify-center">
-            <Button
-              variant="hero"
-              size="lg"
-              asChild
+          {/* Action buttons - compact outline style */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-3 w-full max-w-xl">
+            <a
+              href={`https://dexscreener.com/solana/${TOKEN_ADDRESS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
             >
-              <a
-                href={`https://dexscreener.com/solana/${TOKEN_ADDRESS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <span className="text-lg sm:text-xl">📊</span>
-                <span>DEX</span>
-                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
-              </a>
-            </Button>
+              <span>📊</span>
+              <span>DEX</span>
+            </a>
 
-            <Button
-              variant="hero"
-              size="lg"
-              asChild
+            <a
+              href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
             >
-              <a
-                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2"
-              >
-                <span className="text-lg sm:text-xl">🚀</span>
-                <span>PUMP.FUN</span>
-                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
-              </a>
-            </Button>
+              <span>🚀</span>
+              <span>PUMP</span>
+            </a>
 
-            <Button
-              variant="hero"
-              size="lg"
-              asChild
+            <a
+              href="https://x.com/itsbuckthebunny"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
             >
-              <a
-                href="https://x.com/itsbuckthebunny"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-primary-foreground"
-              >
-                <XIcon />
-                <span>OFFICIAL</span>
-                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
-              </a>
-            </Button>
+              <XIcon />
+              <span>OFFICIAL</span>
+            </a>
 
-            <Button
-              variant="hero"
-              size="lg"
-              asChild
+            <a
+              href="https://x.com/i/communities/1960729088890691700"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
             >
-              <a
-                href="https://x.com/i/communities/1960729088890691700"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 text-primary-foreground"
-              >
-                <XIcon />
-                <span>COMMUNITY</span>
-                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
-              </a>
-            </Button>
+              <XIcon />
+              <span>COMMUNITY</span>
+            </a>
           </div>
 
           {/* Contract Address button */}
