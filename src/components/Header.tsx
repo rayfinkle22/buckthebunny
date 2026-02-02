@@ -8,8 +8,8 @@ const navItems = [
   { id: "hero", label: "Home", icon: Home },
   { id: "chart", label: "Chart", icon: ChartLine },
   { id: "pumpfun", label: "Pump.fun", icon: Rocket, href: `https://pump.fun/coin/${TOKEN_ADDRESS}` },
-  { id: "official-x", label: "Official X", icon: null, href: "https://x.com/itsbuckthebunny" },
-  { id: "x-community", label: "X Community", icon: null, href: "https://x.com/i/communities/1960729088890691700" },
+  { id: "official-x", label: "Official", icon: null, href: "https://x.com/itsbuckthebunny" },
+  { id: "x-community", label: "Community", icon: null, href: "https://x.com/i/communities/1960729088890691700" },
 ];
 
 const XIcon = () => (
@@ -60,17 +60,6 @@ export const Header = () => {
                 )}
               </span>
             </div>
-
-            {/* X Community Button */}
-            <a
-              href="https://x.com/i/communities/1960729088890691700"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-8 h-8 rounded-md border border-border bg-secondary hover:bg-primary/20 flex items-center justify-center transition-all text-foreground hover:text-primary"
-              aria-label="X Community"
-            >
-              <XIcon />
-            </a>
 
             {/* Quick Nav Menu Button */}
             <div className="relative">

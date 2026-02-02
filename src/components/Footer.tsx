@@ -47,7 +47,7 @@ export const Footer = () => {
             className="flex items-center gap-2 text-foreground hover:text-primary transition-colors drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           >
             <XIcon />
-            <span>Official X</span>
+            <span>Official</span>
           </a>
           <span className="text-muted-foreground/30">•</span>
           <a
