@@ -1,0 +1,125 @@
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Copy, Check, ExternalLink } from "lucide-react";
+import { toast } from "sonner";
+import { TOKEN_ADDRESS } from "@/hooks/useMarketData";
+import heroBanner from "@/assets/hero-banner.jpeg";
+
+const XIcon = () => (
+  <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5 fill-current">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
+export const HeroSection = () => {
+  const [copied, setCopied] = useState(false);
+
+  const copyCA = async () => {
+    try {
+      await navigator.clipboard.writeText(TOKEN_ADDRESS);
+      setCopied(true);
+      toast.success("Contract address copied! 🐰");
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      toast.error("Failed to copy");
+    }
+  };
+
+  return (
+    <section id="hero" className="relative flex flex-col items-center justify-center px-3 sm:px-4 py-8 sm:py-12 overflow-hidden">
+      {/* Main content */}
+      <div className="relative z-10 text-center max-w-4xl mx-auto w-full">
+        {/* Hero Banner Image */}
+        <div className="mb-6 sm:mb-10 w-full">
+          <img
+            src={heroBanner}
+            alt="Buck the Bunny"
+            className="w-full max-w-4xl mx-auto rounded-2xl shadow-glow-lg border-2 border-primary/30"
+          />
+        </div>
+
+        {/* Title */}
+        <h1 className="font-display text-5xl sm:text-7xl md:text-8xl text-foreground mb-2 tracking-wide">
+          BUCK THE BUNNY
+        </h1>
+        <p className="font-body text-lg sm:text-xl text-muted-foreground mb-8">
+          The meme-powered, community-driven bunny on Solana 🚀
+        </p>
+
+        {/* Buttons Section */}
+        <div className="flex flex-col items-center gap-4 sm:gap-6">
+          {/* DEX and Community buttons */}
+          <div className="flex gap-3 sm:gap-4 flex-wrap justify-center">
+            <Button
+              variant="hero"
+              size="lg"
+              asChild
+            >
+              <a
+                href={`https://dexscreener.com/solana/${TOKEN_ADDRESS}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <span className="text-lg sm:text-xl">📊</span>
+                <span>DEX</span>
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
+              </a>
+            </Button>
+
+            <Button
+              variant="hero"
+              size="lg"
+              asChild
+            >
+              <a
+                href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <span className="text-lg sm:text-xl">🚀</span>
+                <span>PUMP.FUN</span>
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
+              </a>
+            </Button>
+
+            <Button
+              variant="heroOutline"
+              size="lg"
+              asChild
+            >
+              <a
+                href="https://x.com/i/communities/1960729088890691700"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2"
+              >
+                <XIcon />
+                <span>COMMUNITY</span>
+                <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
+              </a>
+            </Button>
+          </div>
+
+          {/* Contract Address button */}
+          <button
+            onClick={copyCA}
+            className="ca-pill"
+          >
+            <span className="text-xs sm:text-sm text-muted-foreground font-body">CA:</span>
+            <code className="text-xs sm:text-sm font-mono text-foreground truncate max-w-[200px] sm:max-w-none">
+              {TOKEN_ADDRESS}
+            </code>
+            {copied ? (
+              <Check className="w-4 h-4 sm:w-5 sm:h-5 text-primary flex-shrink-0" />
+            ) : (
+              <Copy className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground hover:text-primary flex-shrink-0 transition-colors" />
+            )}
+            <span className="text-xl sm:text-2xl">🐰</span>
+          </button>
+        </div>
+      </div>
+    </section>
+  );
+};
