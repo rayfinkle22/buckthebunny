@@ -49,12 +49,12 @@ export const Footer = () => {
             className="flex items-center gap-2 text-foreground hover:text-primary transition-colors drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
           >
             <XIcon />
-            <span>X Community</span>
+            <span>Community</span>
           </a>
         </div>
 
         <p className="font-body text-xs text-muted-foreground max-w-md mx-auto mb-4">
-          This is a meme token with no intrinsic value. Trade responsibly. Not financial advice. DYOR. 🧠
+          This is a memecoin created for entertainment purposes only and is not financial advice.
         </p>
 
         <div className="flex items-center justify-center text-muted-foreground/50 mb-4">
