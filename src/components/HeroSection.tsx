@@ -112,10 +112,10 @@ export const HeroSection = () => {
           <div className="mt-8 sm:mt-12 max-w-3xl mx-auto text-center space-y-4">
             <h2 className="font-display text-3xl sm:text-4xl text-foreground mb-4">History</h2>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Buck the Bunny is GameStop's long-standing rabbit mascot, first unveiled at a 2009 company conference with a full "origin story" video. He later appeared across GameStop promotions and even starred in the official iOS game Buck and the Coin of Destiny (2010). The character was originally designed by artist Dustin Clause Harder, whose work helped define Buck as a piece of GameStop history.
+              Buck the Bunny is GameStop's long-standing rabbit mascot, first unveiled at a 2009 company conference with a full "origin story" video. He later appeared across GameStop promotions and even starred in the official iOS game Buck and the Coin of Destiny (2010). The character was originally designed by artist Justin Clause Harder, whose work helped define Buck as a piece of GameStop history.
             </p>
             <p className="font-body text-base sm:text-lg text-muted-foreground leading-relaxed">
-              Today, Buck is making a modern comeback through a community-driven memecoin that celebrates both the character and his creator, ensuring the artist who brought Buck to life is finally recognized and rewarded, with all creator fees going directly to Dustin Clause Harder.
+              Today, Buck is making a modern comeback through a community-driven memecoin that celebrates both the character and his creator, ensuring the artist who brought Buck to life is finally recognized and rewarded, with all creator fees going directly to Justin Clause Harder.
             </p>
             
             {/* YouTube Video Embed */}
