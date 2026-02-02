@@ -57,9 +57,7 @@ export const Footer = () => {
           This is a meme token with no intrinsic value. Trade responsibly. Not financial advice. DYOR. 🧠
         </p>
 
-        <div className="flex items-center justify-center gap-4 text-muted-foreground/50">
-          <span className="font-body text-xs">© {currentYear} $BUCK the Bunny</span>
-          <span>•</span>
+        <div className="flex items-center justify-center text-muted-foreground/50">
           <span className="font-body text-xs">Built on Solana</span>
         </div>
       </div>
