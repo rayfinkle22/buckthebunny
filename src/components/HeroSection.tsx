@@ -44,7 +44,7 @@ export const HeroSection = () => {
           BUCK THE BUNNY
         </h1>
         <p className="font-body text-lg sm:text-xl text-muted-foreground mb-8">
-          The meme-powered, community-driven bunny on Solana 🚀
+          GameStop's iconic rabbit mascot
         </p>
 
         {/* Buttons Section */}
@@ -119,6 +119,16 @@ export const HeroSection = () => {
             )}
             <img src={buckEmoji} alt="Buck" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
           </button>
+
+          {/* Story Section */}
+          <div className="mt-8 sm:mt-12 max-w-3xl mx-auto text-left space-y-4">
+            <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Buck the Bunny is GameStop's long-standing rabbit mascot, first unveiled at a 2009 company conference with a full "origin story" video. He later appeared across GameStop promotions and even starred in the official iOS game Buck and the Coin of Destiny (2010). The character was originally designed by artist Dustin Clause Harder, whose work helped define Buck as a piece of GameStop history.
+            </p>
+            <p className="font-body text-sm sm:text-base text-muted-foreground leading-relaxed">
+              Today, Buck is making a modern comeback through a community-driven memecoin that celebrates both the character and his creator, ensuring the artist who brought Buck to life is finally recognized and rewarded, with all creator fees going directly to Dustin Clause Harder.
+            </p>
+          </div>
         </div>
       </div>
     </section>
