@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMarketData, formatMarketCap, TOKEN_ADDRESS } from "@/hooks/useMarketData";
-import { Menu, X, ChartLine, Home, Rocket } from "lucide-react";
+import { Menu, X, ChartLine, Home, Rocket, Scale } from "lucide-react";
 import buckLogo from "@/assets/buck-logo.jpeg";
 
 const navItems = [
@@ -10,6 +10,7 @@ const navItems = [
   { id: "pumpfun", label: "Pump.fun", icon: Rocket, href: `https://pump.fun/coin/${TOKEN_ADDRESS}` },
   { id: "official-x", label: "Official", icon: null, href: "https://x.com/itsbuckthebunny" },
   { id: "x-community", label: "Community", icon: null, href: "https://x.com/i/communities/1960729088890691700" },
+  { id: "legal", label: "Legal", icon: Scale, href: "/legal", isInternal: true },
 ];
 
 const XIcon = () => (
@@ -83,21 +84,33 @@ export const Header = () => {
               >
                 {navItems.map((item) =>
                   item.href ? (
-                    <a
-                      key={item.id}
-                      href={item.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-primary/20 transition-all text-left"
-                      onClick={() => setMenuOpen(false)}
-                    >
-                      {item.icon ? (
-                        <item.icon className="w-4 h-4 text-primary" />
-                      ) : (
-                        <XIcon />
-                      )}
-                      <span className="font-body text-sm text-foreground">{item.label}</span>
-                    </a>
+                    item.isInternal ? (
+                      <Link
+                        key={item.id}
+                        to={item.href}
+                        className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-primary/20 transition-all text-left"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {item.icon && <item.icon className="w-4 h-4 text-primary" />}
+                        <span className="font-body text-sm text-foreground">{item.label}</span>
+                      </Link>
+                    ) : (
+                      <a
+                        key={item.id}
+                        href={item.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-primary/20 transition-all text-left"
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        {item.icon ? (
+                          <item.icon className="w-4 h-4 text-primary" />
+                        ) : (
+                          <XIcon />
+                        )}
+                        <span className="font-body text-sm text-foreground">{item.label}</span>
+                      </a>
+                    )
                   ) : (
                     <button
                       key={item.id}

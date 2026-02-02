@@ -54,7 +54,7 @@ export const HeroSection = () => {
               href={`https://dexscreener.com/solana/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_15px_hsl(0_85%_50%/0.4)] transition-all text-sm font-medium"
             >
               <span>📊</span>
               <span>DEX</span>
@@ -64,7 +64,7 @@ export const HeroSection = () => {
               href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_15px_hsl(0_85%_50%/0.4)] transition-all text-sm font-medium"
             >
               <span>🚀</span>
               <span>PUMP</span>
@@ -74,7 +74,7 @@ export const HeroSection = () => {
               href="https://x.com/itsbuckthebunny"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_15px_hsl(0_85%_50%/0.4)] transition-all text-sm font-medium"
             >
               <XIcon />
               <span>OFFICIAL</span>
@@ -84,7 +84,7 @@ export const HeroSection = () => {
               href="https://x.com/i/communities/1960729088890691700"
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary transition-all text-sm font-medium"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg border border-primary/60 bg-transparent text-foreground hover:bg-primary/10 hover:border-primary hover:shadow-[0_0_15px_hsl(0_85%_50%/0.4)] transition-all text-sm font-medium"
             >
               <XIcon />
               <span>COMMUNITY</span>
