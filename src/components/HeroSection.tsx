@@ -86,7 +86,7 @@ export const HeroSection = () => {
             </Button>
 
             <Button
-              variant="heroOutline"
+              variant="hero"
               size="lg"
               asChild
             >
@@ -94,16 +94,16 @@ export const HeroSection = () => {
                 href="https://x.com/itsbuckthebunny"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-primary-foreground"
               >
                 <XIcon />
-                <span>OFFICIAL X</span>
+                <span>OFFICIAL</span>
                 <ExternalLink className="w-3 h-3 sm:w-4 sm:h-4 opacity-70" />
               </a>
             </Button>
 
             <Button
-              variant="heroOutline"
+              variant="hero"
               size="lg"
               asChild
             >
@@ -111,7 +111,7 @@ export const HeroSection = () => {
                 href="https://x.com/i/communities/1960729088890691700"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2"
+                className="flex items-center gap-2 text-primary-foreground"
               >
                 <XIcon />
                 <span>COMMUNITY</span>
