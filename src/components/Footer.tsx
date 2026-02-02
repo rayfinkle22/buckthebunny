@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { TOKEN_ADDRESS } from "@/hooks/useMarketData";
 import buckEmoji from "@/assets/buck-emoji.png";
 
@@ -40,6 +41,16 @@ export const Footer = () => {
           </a>
           <span className="text-muted-foreground/30">•</span>
           <a
+            href="https://x.com/itsbuckthebunny"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 text-foreground hover:text-primary transition-colors drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
+          >
+            <XIcon />
+            <span>Official X</span>
+          </a>
+          <span className="text-muted-foreground/30">•</span>
+          <a
             href="https://x.com/i/communities/1960729088890691700"
             target="_blank"
             rel="noopener noreferrer"
@@ -58,9 +69,16 @@ export const Footer = () => {
           <span className="font-body text-xs">Built on Solana</span>
         </div>
 
-        <p className="font-body text-[10px] text-muted-foreground/40 max-w-lg mx-auto leading-relaxed">
+        <p className="font-body text-[10px] text-muted-foreground/40 max-w-lg mx-auto leading-relaxed mb-4">
           This is a fan-made, community-driven project and does not claim ownership of Buck the Bunny. Buck the Bunny is the intellectual property of GameStop, and this project is not affiliated with or endorsed by GameStop.
         </p>
+
+        <Link
+          to="/legal"
+          className="font-body text-[10px] text-muted-foreground/40 hover:text-primary transition-colors underline"
+        >
+          Legal Disclaimer & Disclosures
+        </Link>
       </div>
     </footer>
   );
