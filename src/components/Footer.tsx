@@ -15,7 +15,7 @@ export const Footer = () => {
       <div className="relative z-20 max-w-6xl mx-auto px-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <img src={buckEmoji} alt="Buck" className="w-7 h-7 object-contain" />
-          <span className="font-display text-2xl text-primary tracking-wide">$BUCK THE BUNNY</span>
+          <span className="font-display text-2xl text-foreground tracking-wide drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]">$BUCK THE BUNNY</span>
           <span className="text-2xl">🚀</span>
         </div>
 
@@ -28,7 +28,7 @@ export const Footer = () => {
             href={`https://dexscreener.com/solana/${TOKEN_ADDRESS}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary hover:text-accent transition-colors"
+            className="text-foreground hover:text-primary transition-colors drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
           >
             Dexscreener
           </a>
@@ -37,7 +37,7 @@ export const Footer = () => {
             href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary hover:text-accent transition-colors"
+            className="text-foreground hover:text-primary transition-colors drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
           >
             Pump.fun
           </a>
@@ -46,7 +46,7 @@ export const Footer = () => {
             href="https://x.com/i/communities/1960729088890691700"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-primary hover:text-accent transition-colors"
+            className="flex items-center gap-2 text-foreground hover:text-primary transition-colors drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
           >
             <XIcon />
             <span>X Community</span>
