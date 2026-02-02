@@ -22,8 +22,8 @@
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
 
-    /* Electric GameStop red - vibrant and bold */
-    --primary: 0 85% 50%;
+    /* Softer GameStop red - less harsh, more refined */
+    --primary: 0 72% 45%;
     --primary-foreground: 0 0% 100%;
 
     /* Secondary - warm gray */
@@ -34,22 +34,22 @@
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 65%;
 
-    /* Accent - crimson glow */
-    --accent: 350 85% 45%;
+    /* Accent - softer crimson */
+    --accent: 350 65% 40%;
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 70% 45%;
+    --destructive: 0 60% 40%;
     --destructive-foreground: 0 0% 100%;
 
     --border: 0 0% 18%;
     --input: 0 0% 18%;
-    --ring: 0 85% 50%;
+    --ring: 0 72% 45%;
 
     --radius: 0.75rem;
 
-    /* Custom Buck theme colors */
-    --buck-red: 0 85% 50%;
-    --buck-red-glow: 350 90% 55%;
+    /* Custom Buck theme colors - toned down */
+    --buck-red: 0 72% 45%;
+    --buck-red-glow: 350 70% 48%;
     --buck-charcoal: 0 0% 4%;
     --buck-dark: 0 0% 8%;
     --buck-gray: 0 0% 65%;
@@ -79,13 +79,13 @@
     --card-foreground: 0 0% 98%;
     --popover: 0 0% 8%;
     --popover-foreground: 0 0% 98%;
-    --primary: 0 85% 50%;
+    --primary: 0 72% 45%;
     --primary-foreground: 0 0% 100%;
     --secondary: 0 0% 15%;
     --secondary-foreground: 0 0% 98%;
     --muted: 0 0% 12%;
     --muted-foreground: 0 0% 65%;
-    --accent: 350 85% 45%;
+    --accent: 350 65% 40%;
     --accent-foreground: 0 0% 100%;
     --destructive: 0 70% 45%;
     --destructive-foreground: 0 0% 100%;
@@ -123,13 +123,13 @@
   /* Hero button variant styles */
   .btn-hero {
     @apply relative overflow-hidden font-bold uppercase tracking-wider;
-    background: linear-gradient(135deg, hsl(0 85% 50%), hsl(350 85% 45%));
-    box-shadow: 0 0 20px hsl(0 85% 50% / 0.4);
+    background: linear-gradient(135deg, hsl(0 65% 42%), hsl(350 60% 38%));
+    box-shadow: 0 0 15px hsl(0 65% 42% / 0.3);
     transition: all 0.3s ease;
   }
 
   .btn-hero:hover {
-    box-shadow: 0 0 30px hsl(0 85% 50% / 0.6);
+    box-shadow: 0 0 25px hsl(0 65% 42% / 0.5);
     transform: translateY(-2px);
   }
 
