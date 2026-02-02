@@ -15,20 +15,17 @@ export const Footer = () => {
       <div className="relative z-20 max-w-6xl mx-auto px-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
           <img src={buckEmoji} alt="Buck" className="w-7 h-7 object-contain" />
-          <span className="font-display text-2xl text-foreground tracking-wide drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]">$BUCK THE BUNNY</span>
+          <span className="font-display text-2xl text-foreground tracking-wide drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]">$BUCK THE BUNNY</span>
           <span className="text-2xl">🚀</span>
         </div>
 
-        <p className="font-body text-sm text-muted-foreground mb-4">
-          Community-first. Fun-forward. Bold. Unapologetic. 🔥
-        </p>
 
         <div className="flex flex-wrap justify-center gap-4 mb-6 text-sm font-body">
           <a
             href={`https://dexscreener.com/solana/${TOKEN_ADDRESS}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-foreground hover:text-primary transition-colors drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
+            className="text-foreground hover:text-primary transition-colors drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           >
             Dexscreener
           </a>
@@ -37,7 +34,7 @@ export const Footer = () => {
             href={`https://pump.fun/coin/${TOKEN_ADDRESS}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-foreground hover:text-primary transition-colors drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
+            className="text-foreground hover:text-primary transition-colors drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           >
             Pump.fun
           </a>
@@ -46,7 +43,7 @@ export const Footer = () => {
             href="https://x.com/i/communities/1960729088890691700"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-foreground hover:text-primary transition-colors drop-shadow-[0_0_8px_hsl(var(--primary)/0.6)]"
+            className="flex items-center gap-2 text-foreground hover:text-primary transition-colors drop-shadow-[0_0_6px_rgba(255,255,255,0.4)]"
           >
             <XIcon />
             <span>Community</span>
