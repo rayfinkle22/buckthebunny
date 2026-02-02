@@ -1,4 +1,5 @@
 import { TOKEN_ADDRESS } from "@/hooks/useMarketData";
+import buckEmoji from "@/assets/buck-emoji.png";
 
 const XIcon = () => (
   <svg viewBox="0 0 24 24" className="w-4 h-4 fill-current">
@@ -13,7 +14,7 @@ export const Footer = () => {
     <footer className="relative z-10 border-t border-border py-12 mt-12 bg-card">
       <div className="relative z-20 max-w-6xl mx-auto px-4 text-center">
         <div className="flex items-center justify-center gap-2 mb-4">
-          <span className="text-2xl">🐰</span>
+          <img src={buckEmoji} alt="Buck" className="w-7 h-7 object-contain" />
           <span className="font-display text-2xl text-primary tracking-wide">$BUCK THE BUNNY</span>
           <span className="text-2xl">🚀</span>
         </div>

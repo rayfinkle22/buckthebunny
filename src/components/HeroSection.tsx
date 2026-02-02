@@ -4,6 +4,7 @@ import { Copy, Check, ExternalLink } from "lucide-react";
 import { toast } from "sonner";
 import { TOKEN_ADDRESS } from "@/hooks/useMarketData";
 import heroBanner from "@/assets/hero-banner.jpeg";
+import buckEmoji from "@/assets/buck-emoji.png";
 
 const XIcon = () => (
   <svg viewBox="0 0 24 24" className="w-4 h-4 sm:w-5 sm:h-5 fill-current">
@@ -18,7 +19,7 @@ export const HeroSection = () => {
     try {
       await navigator.clipboard.writeText(TOKEN_ADDRESS);
       setCopied(true);
-      toast.success("Contract address copied! 🐰");
+      toast.success("Contract address copied!");
       setTimeout(() => setCopied(false), 2000);
     } catch {
       toast.error("Failed to copy");
@@ -116,7 +117,7 @@ export const HeroSection = () => {
             ) : (
               <Copy className="w-4 h-4 sm:w-5 sm:h-5 text-muted-foreground hover:text-primary flex-shrink-0 transition-colors" />
             )}
-            <span className="text-xl sm:text-2xl">🐰</span>
+            <img src={buckEmoji} alt="Buck" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
           </button>
         </div>
       </div>
