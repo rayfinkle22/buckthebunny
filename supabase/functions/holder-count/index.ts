@@ -15,45 +15,85 @@ serve(async (req) => {
   }
 
   try {
-    // Use SolanaFM API for holder count
-    const response = await fetch(
-      `https://api.solana.fm/v0/tokens/${TOKEN_ADDRESS}/holders?page=1&pageSize=1`,
-      {
-        headers: { 'Accept': 'application/json' }
-      }
-    );
+    // No-API-key approach: count token accounts on-chain via Solana RPC.
+    // Note: This counts token *accounts* with a non-zero balance for the mint.
+    // For most SPL tokens this is effectively the holder count used by common explorers.
 
-    console.log('SolanaFM response status:', response.status);
-    
-    if (response.ok) {
-      const data = await response.json();
-      console.log('SolanaFM data:', JSON.stringify(data).substring(0, 500));
-      
-      // SolanaFM returns pagination info with total
-      if (data?.pagination?.totalItems !== undefined) {
-        return new Response(
-          JSON.stringify({ holderCount: data.pagination.totalItems }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-      
-      if (data?.totalItems !== undefined) {
-        return new Response(
-          JSON.stringify({ holderCount: data.totalItems }),
-          { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-        );
-      }
-    } else {
+    const TOKEN_PROGRAM_ID = "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA";
+    const RPC_URL = "https://api.mainnet-beta.solana.com";
+
+    const body = {
+      jsonrpc: "2.0",
+      id: 1,
+      method: "getProgramAccounts",
+      params: [
+        TOKEN_PROGRAM_ID,
+        {
+          encoding: "base64",
+          commitment: "confirmed",
+          // Only fetch the `amount` field (u64 LE at offset 64) to keep payload small
+          dataSlice: { offset: 64, length: 8 },
+          filters: [
+            { dataSize: 165 },
+            { memcmp: { offset: 0, bytes: TOKEN_ADDRESS } },
+          ],
+        },
+      ],
+    };
+
+    const response = await fetch(RPC_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "User-Agent": "LovableCloudFunction/holder-count",
+      },
+      body: JSON.stringify(body),
+    });
+
+    console.log("RPC status:", response.status);
+
+    if (!response.ok) {
       const errorText = await response.text();
-      console.log('SolanaFM error:', errorText);
+      console.log("RPC error (truncated):", errorText.substring(0, 300));
+      return new Response(JSON.stringify({ holderCount: null }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
     }
 
-    // Return null if no data found
-    return new Response(
-      JSON.stringify({ holderCount: null }),
-      { headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
-    );
+    const json = await response.json();
 
+    if (json?.error) {
+      console.log("RPC json error:", JSON.stringify(json.error).substring(0, 500));
+      return new Response(JSON.stringify({ holderCount: null }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    const accounts: any[] = json?.result ?? [];
+
+    let holders = 0;
+    for (const acc of accounts) {
+      // With dataSlice + base64 encoding, this is typically: data: ["<base64>", "base64"]
+      const dataField = acc?.account?.data;
+      const base64 = Array.isArray(dataField) ? dataField[0] : null;
+      if (typeof base64 !== "string") continue;
+
+      const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+      if (bytes.length < 8) continue;
+
+      // u64 little-endian
+      let amount = 0n;
+      for (let i = 0; i < 8; i++) amount |= BigInt(bytes[i]) << (8n * BigInt(i));
+
+      if (amount > 0n) holders++;
+    }
+
+    console.log("RPC matched token accounts:", accounts.length, "non-zero:", holders);
+
+    return new Response(JSON.stringify({ holderCount: holders }), {
+      headers: { ...corsHeaders, "Content-Type": "application/json" },
+    });
   } catch (error) {
     console.error('Error fetching holder count:', error);
     return new Response(
