@@ -30,6 +30,7 @@ interface MarketData {
   txns1h: TransactionData | null;
   pairCreatedAt: number | null;
   dexId: string | null;
+  holderCount: number | null;
   isLoading: boolean;
 }
 
@@ -47,18 +48,39 @@ let cachedData: MarketData = {
   txns1h: null,
   pairCreatedAt: null,
   dexId: null,
+  holderCount: null,
   isLoading: true,
 };
 
 let listeners: Set<() => void> = new Set();
 let fetchInterval: ReturnType<typeof setInterval> | null = null;
 
-const fetchMarketData = async () => {
+const fetchHolderCount = async (): Promise<number | null> => {
   try {
     const response = await fetch(
-      `https://api.dexscreener.com/latest/dex/tokens/${TOKEN_ADDRESS}`
+      `https://api.solscan.io/v2/token/holder/count?address=${TOKEN_ADDRESS}`,
+      {
+        headers: {
+          'Accept': 'application/json',
+        }
+      }
     );
     const data = await response.json();
+    return data?.data?.count ?? null;
+  } catch (error) {
+    console.error("Failed to fetch holder count:", error);
+    return null;
+  }
+};
+
+const fetchMarketData = async () => {
+  try {
+    const [dexResponse, holderCount] = await Promise.all([
+      fetch(`https://api.dexscreener.com/latest/dex/tokens/${TOKEN_ADDRESS}`),
+      fetchHolderCount()
+    ]);
+    
+    const data = await dexResponse.json();
     if (data.pairs && data.pairs.length > 0) {
       const pair = data.pairs.find((p: any) => p.dexId === "raydium") || data.pairs[0];
 
@@ -83,10 +105,11 @@ const fetchMarketData = async () => {
         txns1h: pair.txns?.h1 ?? null,
         pairCreatedAt: pair.pairCreatedAt ?? null,
         dexId: pair.dexId ?? null,
+        holderCount: holderCount,
         isLoading: false,
       };
     } else {
-      cachedData = { ...cachedData, isLoading: false };
+      cachedData = { ...cachedData, holderCount: holderCount, isLoading: false };
     }
   } catch (error) {
     console.error("Failed to fetch market data:", error);
