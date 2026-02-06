@@ -1,8 +1,7 @@
 import { useMarketData, formatMarketCap, TOKEN_ADDRESS } from "@/hooks/useMarketData";
 
 export const DexChart = () => {
-  const { marketCap, txns24h, priceChange, holderCount, isLoading } = useMarketData();
-  const priceChange24h = priceChange.h24;
+  const { marketCap, txns24h, holderCount, isLoading } = useMarketData();
   const totalTxns = txns24h ? txns24h.buys + txns24h.sells : null;
 
   return (
@@ -17,10 +16,10 @@ export const DexChart = () => {
 
         {/* Market Stats Display */}
         <div className="mb-6 stats-card">
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             <div className="text-center">
               <p className="font-body text-sm text-muted-foreground mb-1">Market Cap</p>
-              <p className="font-display text-xl sm:text-2xl text-foreground">
+              <p className="font-display text-2xl sm:text-3xl text-foreground">
                 {isLoading ? (
                   <span className="opacity-50">...</span>
                 ) : marketCap ? (
@@ -32,7 +31,7 @@ export const DexChart = () => {
             </div>
             <div className="text-center">
               <p className="font-body text-sm text-muted-foreground mb-1">Holders</p>
-              <p className="font-display text-xl sm:text-2xl text-foreground">
+              <p className="font-display text-2xl sm:text-3xl text-foreground">
                 {isLoading ? (
                   <span className="opacity-50">...</span>
                 ) : holderCount !== null ? (
@@ -44,29 +43,11 @@ export const DexChart = () => {
             </div>
             <div className="text-center">
               <p className="font-body text-sm text-muted-foreground mb-1">24h Txns</p>
-              <p className="font-display text-xl sm:text-2xl text-foreground">
+              <p className="font-display text-2xl sm:text-3xl text-foreground">
                 {isLoading ? (
                   <span className="opacity-50">...</span>
                 ) : totalTxns !== null ? (
                   totalTxns.toLocaleString()
-                ) : (
-                  "N/A"
-                )}
-              </p>
-            </div>
-            <div className="text-center">
-              <p className="font-body text-sm text-muted-foreground mb-1">24h Change</p>
-              <p className={`font-display text-xl sm:text-2xl ${
-                priceChange24h !== null 
-                  ? priceChange24h >= 0 
-                    ? "text-green-500" 
-                    : "text-red-500"
-                  : "text-foreground"
-              }`}>
-                {isLoading ? (
-                  <span className="opacity-50">...</span>
-                ) : priceChange24h !== null ? (
-                  `${priceChange24h >= 0 ? '+' : ''}${priceChange24h.toFixed(2)}%`
                 ) : (
                   "N/A"
                 )}

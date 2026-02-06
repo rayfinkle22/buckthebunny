@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface TransactionData {
   buys: number;
@@ -57,16 +58,9 @@ let fetchInterval: ReturnType<typeof setInterval> | null = null;
 
 const fetchHolderCount = async (): Promise<number | null> => {
   try {
-    const response = await fetch(
-      `https://api.solscan.io/v2/token/holder/count?address=${TOKEN_ADDRESS}`,
-      {
-        headers: {
-          'Accept': 'application/json',
-        }
-      }
-    );
-    const data = await response.json();
-    return data?.data?.count ?? null;
+    const { data, error } = await supabase.functions.invoke('holder-count');
+    if (error) throw error;
+    return data?.holderCount ?? null;
   } catch (error) {
     console.error("Failed to fetch holder count:", error);
     return null;
