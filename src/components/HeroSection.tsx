@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { TOKEN_ADDRESS } from "@/hooks/useMarketData";
-import heroBanner from "@/assets/hero-banner.jpeg";
+import heroBanner from "@/assets/hero-banner.gif";
 import buckEmoji from "@/assets/buck-emoji.png";
 
 const XIcon = () => (
