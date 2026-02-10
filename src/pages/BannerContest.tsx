@@ -282,31 +282,31 @@ const BannerContest = () => {
             <div className="text-center mb-8">
               <div className="flex items-start justify-center gap-3 sm:gap-5 font-display text-4xl sm:text-6xl font-bold tracking-wider">
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.days)}</span>
+                  <span className="text-red-500">{pad(timeLeft.days)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">DAYS</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">:</span>
+                  <span className="text-red-500">:</span>
                   <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.hours)}</span>
+                  <span className="text-red-500">{pad(timeLeft.hours)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">HRS</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">:</span>
+                  <span className="text-red-500">:</span>
                   <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.minutes)}</span>
+                  <span className="text-red-500">{pad(timeLeft.minutes)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">MIN</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">:</span>
+                  <span className="text-red-500">:</span>
                   <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
                 </div>
                 <div className="flex flex-col items-center">
-                  <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.seconds)}</span>
+                  <span className="text-red-500">{pad(timeLeft.seconds)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">SEC</span>
                 </div>
               </div>
@@ -467,15 +467,15 @@ const BannerContest = () => {
 
               <p className="font-body text-foreground text-base sm:text-lg leading-relaxed">
                 Community members can submit custom banners (1500×500) over a set submission period which will occur from{" "}
-                <span className="font-semibold text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">
+                <span className="font-semibold text-red-500">
                   {settings?.submission_start ? formatDate(settings.submission_start) : "TBD"}
                 </span>{" "}
                 to{" "}
-                <span className="font-semibold text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">
+                <span className="font-semibold text-red-500">
                   {settings?.submission_end ? formatDate(settings.submission_end) : "TBD"}
                 </span>.{" "}
                 The banners are submitted in the BUCK{" "}
-                <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)] underline hover:text-red-400 transition-colors">Community</a>.
+                <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-red-500 underline hover:text-red-400 transition-colors">Community</a>.
               </p>
 
               <div className="border-t border-border pt-4">
