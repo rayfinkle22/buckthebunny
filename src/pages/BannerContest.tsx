@@ -49,49 +49,22 @@ const BannerContest = () => {
 
   const { toast } = useToast();
 
-  // Fetch wallet balance
+  // Fetch wallet balance via edge function
   useEffect(() => {
-    const fetchBalance = async () => {
+    const fetchWalletBalance = async () => {
       try {
-        const res = await fetch("https://api.mainnet-beta.solana.com", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            jsonrpc: "2.0",
-            id: 1,
-            method: "getBalance",
-            params: [WALLET_ADDRESS],
-          }),
-        });
-        const data = await res.json();
-        if (data.result?.value !== undefined) {
-          setSolBalance(data.result.value / 1e9);
+        const { data, error } = await supabase.functions.invoke("wallet-balance");
+        if (!error && data) {
+          setSolBalance(data.solBalance);
+          setSolPrice(data.solPrice);
         }
       } catch (e) {
-        console.error("Failed to fetch SOL balance", e);
+        console.error("Failed to fetch wallet balance", e);
       }
     };
 
-    const fetchPrice = async () => {
-      try {
-        const res = await fetch(
-          "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd"
-        );
-        const data = await res.json();
-        if (data.solana?.usd) {
-          setSolPrice(data.solana.usd);
-        }
-      } catch (e) {
-        console.error("Failed to fetch SOL price", e);
-      }
-    };
-
-    fetchBalance();
-    fetchPrice();
-    const interval = setInterval(() => {
-      fetchBalance();
-      fetchPrice();
-    }, 60000);
+    fetchWalletBalance();
+    const interval = setInterval(fetchWalletBalance, 60000);
     return () => clearInterval(interval);
   }, []);
 
