@@ -1,6 +1,5 @@
 import { Header } from "@/components/Header";
 import { HeroSection } from "@/components/HeroSection";
-import { ContestSummary } from "@/components/ContestSummary";
 import { DexChart } from "@/components/DexChart";
 import { Footer } from "@/components/Footer";
 
@@ -10,7 +9,6 @@ const Index = () => {
       <Header />
       <main className="flex-1 relative z-10 pt-16 sm:pt-18">
         <HeroSection />
-        <ContestSummary />
         <DexChart />
       </main>
       <Footer />

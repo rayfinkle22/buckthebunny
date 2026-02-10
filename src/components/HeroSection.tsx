@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Copy, Check } from "lucide-react";
 import { toast } from "sonner";
 import { TOKEN_ADDRESS } from "@/hooks/useMarketData";
+import { ContestSummary } from "@/components/ContestSummary";
 import heroBanner from "@/assets/hero-banner.gif";
 import buckEmoji from "@/assets/buck-emoji.png";
 
@@ -107,6 +108,9 @@ export const HeroSection = () => {
             )}
             <img src={buckEmoji} alt="Buck" className="w-6 h-6 sm:w-7 sm:h-7 object-contain" />
           </button>
+
+          {/* Contest Summary */}
+          <ContestSummary />
 
           {/* History Section */}
           <div className="mt-8 sm:mt-12 max-w-3xl mx-auto text-center space-y-4">
