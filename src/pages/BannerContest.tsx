@@ -15,9 +15,8 @@ interface ContestSettings {
   fee_percentage: number;
   submission_start: string;
   submission_end: string;
+  wallet_address: string;
 }
-
-const WALLET_ADDRESS = "HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L";
 
 const BannerContest = () => {
   const [password, setPassword] = useState("");
@@ -39,6 +38,7 @@ const BannerContest = () => {
   const [formFeePercent, setFormFeePercent] = useState("");
   const [formSubStart, setFormSubStart] = useState("");
   const [formSubEnd, setFormSubEnd] = useState("");
+  const [formWalletAddress, setFormWalletAddress] = useState("HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
 
   // Countdown state
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -51,9 +51,12 @@ const BannerContest = () => {
 
   // Fetch wallet balance via edge function
   useEffect(() => {
+    if (!settings?.wallet_address) return;
     const fetchWalletBalance = async () => {
       try {
-        const { data, error } = await supabase.functions.invoke("wallet-balance");
+        const { data, error } = await supabase.functions.invoke("wallet-balance", {
+          body: { walletAddress: settings.wallet_address },
+        });
         if (!error && data) {
           setSolBalance(data.solBalance);
           setSolPrice(data.solPrice);
@@ -66,7 +69,7 @@ const BannerContest = () => {
     fetchWalletBalance();
     const interval = setInterval(fetchWalletBalance, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, [settings?.wallet_address]);
 
   // Fetch settings
   const fetchSettings = useCallback(async () => {
@@ -92,6 +95,7 @@ const BannerContest = () => {
       setFormFeePercent(String(data.fee_percentage));
       setFormSubStart(data.submission_start);
       setFormSubEnd(data.submission_end);
+      setFormWalletAddress(data.wallet_address || "HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
     }
     setLoading(false);
   }, []);
@@ -175,6 +179,7 @@ const BannerContest = () => {
         fee_percentage: parseFloat(formFeePercent),
         submission_start: formSubStart,
         submission_end: formSubEnd,
+        wallet_address: formWalletAddress,
       })
       .eq("id", settings.id);
 
@@ -399,6 +404,16 @@ const BannerContest = () => {
                         type="date"
                         value={formSubEnd}
                         onChange={(e) => setFormSubEnd(e.target.value)}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-foreground font-body text-sm">Wallet Address</Label>
+                      <Input
+                        type="text"
+                        placeholder="Solana wallet address"
+                        value={formWalletAddress}
+                        onChange={(e) => setFormWalletAddress(e.target.value)}
                       />
                     </div>
 

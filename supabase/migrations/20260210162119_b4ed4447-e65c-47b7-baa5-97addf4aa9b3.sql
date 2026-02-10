@@ -1,0 +1,1 @@
+ALTER TABLE public.contest_settings ADD COLUMN wallet_address TEXT NOT NULL DEFAULT 'HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L';

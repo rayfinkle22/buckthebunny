@@ -23,6 +23,7 @@ export type Database = {
           submission_end: string
           submission_start: string
           updated_at: string
+          wallet_address: string
         }
         Insert: {
           countdown_end?: string
@@ -32,6 +33,7 @@ export type Database = {
           submission_end?: string
           submission_start?: string
           updated_at?: string
+          wallet_address?: string
         }
         Update: {
           countdown_end?: string
@@ -41,6 +43,7 @@ export type Database = {
           submission_end?: string
           submission_start?: string
           updated_at?: string
+          wallet_address?: string
         }
         Relationships: []
       }
