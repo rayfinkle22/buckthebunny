@@ -20,6 +20,7 @@ export type Database = {
           created_at: string
           fee_percentage: number
           id: string
+          min_pool_display_usd: number
           submission_end: string
           submission_start: string
           updated_at: string
@@ -30,6 +31,7 @@ export type Database = {
           created_at?: string
           fee_percentage?: number
           id?: string
+          min_pool_display_usd?: number
           submission_end?: string
           submission_start?: string
           updated_at?: string
@@ -40,6 +42,7 @@ export type Database = {
           created_at?: string
           fee_percentage?: number
           id?: string
+          min_pool_display_usd?: number
           submission_end?: string
           submission_start?: string
           updated_at?: string

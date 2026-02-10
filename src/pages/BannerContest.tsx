@@ -16,6 +16,7 @@ interface ContestSettings {
   submission_start: string;
   submission_end: string;
   wallet_address: string;
+  min_pool_display_usd: number;
 }
 
 const BannerContest = () => {
@@ -39,6 +40,7 @@ const BannerContest = () => {
   const [formSubStart, setFormSubStart] = useState("");
   // derivedSubEnd is computed from countdown end
   const [formWalletAddress, setFormWalletAddress] = useState("HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
+  const [formMinPoolUsd, setFormMinPoolUsd] = useState("100");
 
   // Countdown state
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
@@ -98,6 +100,7 @@ const BannerContest = () => {
       setFormFeePercent(String(data.fee_percentage));
       setFormSubStart(data.submission_start);
       setFormWalletAddress(data.wallet_address || "HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
+      setFormMinPoolUsd(String(data.min_pool_display_usd ?? 100));
     }
     setLoading(false);
   }, []);
@@ -182,6 +185,7 @@ const BannerContest = () => {
         submission_start: formSubStart,
         submission_end: derivedSubEnd,
         wallet_address: formWalletAddress,
+        min_pool_display_usd: parseFloat(formMinPoolUsd),
       })
       .eq("id", settings.id);
 
@@ -308,28 +312,33 @@ const BannerContest = () => {
               </div>
             </div>
 
-            {/* Wallet Balance */}
-            <div className="text-center mb-8">
-              <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">
-                Community Reward Pool Balance:
-              </h2>
-              <div className="flex items-center justify-center gap-4 sm:gap-6">
-                <div className="bg-card border border-border rounded-xl px-5 py-3">
-                  <p className="font-body text-muted-foreground text-xs mb-1">SOL</p>
-                  <p className="font-display text-2xl sm:text-3xl text-foreground">
-                    {solBalance !== null ? solBalance.toFixed(4) : "—"}
-                  </p>
+            {/* Wallet Balance - only show if above threshold */}
+            {(() => {
+              const usdVal = solBalance !== null && solPrice !== null ? solBalance * solPrice : 0;
+              const threshold = settings?.min_pool_display_usd ?? 100;
+              if (usdVal < threshold) return null;
+              return (
+                <div className="text-center mb-8">
+                  <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">
+                    Community Reward Pool Balance:
+                  </h2>
+                  <div className="flex items-center justify-center gap-4 sm:gap-6">
+                    <div className="bg-card border border-border rounded-xl px-5 py-3">
+                      <p className="font-body text-muted-foreground text-xs mb-1">SOL</p>
+                      <p className="font-display text-2xl sm:text-3xl text-foreground">
+                        {solBalance !== null ? solBalance.toFixed(4) : "—"}
+                      </p>
+                    </div>
+                    <div className="bg-card border border-border rounded-xl px-5 py-3">
+                      <p className="font-body text-muted-foreground text-xs mb-1">USD</p>
+                      <p className="font-display text-2xl sm:text-3xl text-foreground">
+                        {`$${usdVal.toFixed(2)}`}
+                      </p>
+                    </div>
+                  </div>
                 </div>
-                <div className="bg-card border border-border rounded-xl px-5 py-3">
-                  <p className="font-body text-muted-foreground text-xs mb-1">USD</p>
-                  <p className="font-display text-2xl sm:text-3xl text-foreground">
-                    {solBalance !== null && solPrice !== null
-                      ? `$${(solBalance * solPrice).toFixed(2)}`
-                      : "—"}
-                  </p>
-                </div>
-              </div>
-            </div>
+              );
+            })()}
 
             {/* Admin Lock Icon */}
             <div className="text-center mb-8">
@@ -419,6 +428,17 @@ const BannerContest = () => {
                         value={formWalletAddress}
                         onChange={(e) => setFormWalletAddress(e.target.value)}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-foreground font-body text-sm">Min Pool Display (USD)</Label>
+                      <Input
+                        type="number"
+                        min="0"
+                        value={formMinPoolUsd}
+                        onChange={(e) => setFormMinPoolUsd(e.target.value)}
+                      />
+                      <p className="text-xs text-muted-foreground">Reward pool only shown when balance exceeds this USD amount</p>
                     </div>
 
                     <div className="flex gap-3">
