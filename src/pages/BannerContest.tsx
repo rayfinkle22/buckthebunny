@@ -348,8 +348,8 @@ const BannerContest = () => {
             )}
 
             {/* Contest Content */}
-            <div className="bg-card border border-border rounded-xl p-6 sm:p-8 space-y-6">
-              <h1 className="font-display text-3xl sm:text-4xl text-foreground text-center">
+            <div className="bg-card border border-border rounded-xl p-6 sm:p-8 space-y-6 text-center">
+              <h1 className="font-display text-3xl sm:text-4xl text-foreground">
                 Community Reward Pool
               </h1>
 
@@ -370,7 +370,7 @@ const BannerContest = () => {
 
               <div className="border-t border-border pt-4">
                 <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">Reward:</h2>
-                <ul className="font-body text-foreground text-base sm:text-lg leading-relaxed list-disc list-inside space-y-2">
+                <ul className="font-body text-foreground text-base sm:text-lg leading-relaxed space-y-2 list-none">
                   <li>The winner receives the Community Reward Pool</li>
                   <li>Their banner will be featured for one full week across the community and on the DEX</li>
                 </ul>
