@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useMarketData, formatMarketCap, TOKEN_ADDRESS } from "@/hooks/useMarketData";
-import { Menu, X, ChartLine, Home, Rocket, Scale } from "lucide-react";
+import { Menu, X, ChartLine, Home, Rocket, Scale, ImageIcon } from "lucide-react";
 import buckLogo from "@/assets/buck-logo.jpeg";
 
 const navItems = [
@@ -10,6 +10,7 @@ const navItems = [
   { id: "pumpfun", label: "Pump.fun", icon: Rocket, href: `https://pump.fun/coin/${TOKEN_ADDRESS}` },
   { id: "official-x", label: "Official", icon: null, href: "https://x.com/itsbuckthebunny" },
   { id: "x-community", label: "Community", icon: null, href: "https://x.com/i/communities/1960729088890691700" },
+  { id: "banner-contest", label: "Banner Contest", icon: ImageIcon, href: "/banner-contest", isInternal: true },
   { id: "legal", label: "Legal", icon: Scale, href: "/legal", isInternal: true },
 ];
 
