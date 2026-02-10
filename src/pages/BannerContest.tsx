@@ -274,7 +274,7 @@ const BannerContest = () => {
           <div className="max-w-3xl mx-auto py-8">
             {/* Countdown Timer */}
             <div className="text-center mb-8">
-              <div className="flex items-end justify-center gap-3 sm:gap-5 font-display text-4xl sm:text-6xl font-bold tracking-wider">
+              <div className="flex items-start justify-center gap-3 sm:gap-5 font-display text-4xl sm:text-6xl font-bold tracking-wider">
                 <div className="flex flex-col items-center">
                   <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.days)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">DAYS</span>
