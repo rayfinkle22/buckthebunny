@@ -450,9 +450,8 @@ const BannerContest = () => {
                 <span className="font-semibold text-primary">
                   {settings?.submission_end ? formatDate(settings.submission_end) : "TBD"}
                 </span>.{" "}
-                The banners are submitted in the{" "}
-                <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline hover:text-primary/80 transition-colors">BUCK</a>{" "}
-                Community.
+                The banners are submitted in the BUCK{" "}
+                <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline hover:text-primary/80 transition-colors">Community</a>.
               </p>
 
               <div className="border-t border-border pt-4">
