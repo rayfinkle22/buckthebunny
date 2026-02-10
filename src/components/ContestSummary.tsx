@@ -39,7 +39,6 @@ export const ContestSummary = () => {
     fetchSettings();
   }, [fetchSettings]);
 
-  // Wallet balance
   useEffect(() => {
     if (!settings?.wallet_address) return;
     const fetchWalletBalance = async () => {
@@ -60,7 +59,6 @@ export const ContestSummary = () => {
     return () => clearInterval(interval);
   }, [settings?.wallet_address]);
 
-  // Countdown
   useEffect(() => {
     if (!settings) return;
     const tick = () => {
@@ -95,31 +93,31 @@ export const ContestSummary = () => {
         {/* Countdown Timer */}
         <div className="flex items-start justify-center gap-3 sm:gap-5 font-display text-4xl sm:text-6xl font-bold tracking-wider">
           <div className="flex flex-col items-center">
-            <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.days)}</span>
+            <span className="text-red-500">{pad(timeLeft.days)}</span>
             <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">DAYS</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">:</span>
+            <span className="text-red-500">:</span>
             <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.hours)}</span>
+            <span className="text-red-500">{pad(timeLeft.hours)}</span>
             <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">HRS</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">:</span>
+            <span className="text-red-500">:</span>
             <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.minutes)}</span>
+            <span className="text-red-500">{pad(timeLeft.minutes)}</span>
             <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">MIN</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">:</span>
+            <span className="text-red-500">:</span>
             <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
           </div>
           <div className="flex flex-col items-center">
-            <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">{pad(timeLeft.seconds)}</span>
+            <span className="text-red-500">{pad(timeLeft.seconds)}</span>
             <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">SEC</span>
           </div>
         </div>
@@ -130,11 +128,11 @@ export const ContestSummary = () => {
           <div className="bg-card border border-border rounded-xl px-5 py-4">
             <p className="font-body text-muted-foreground text-xs mb-1">Contest Period</p>
             <p className="font-display text-sm sm:text-base text-foreground">
-              <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">
+              <span className="text-red-500 font-semibold">
                 {formatDate(settings.submission_start)}
               </span>
               {" — "}
-              <span className="text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">
+              <span className="text-red-500 font-semibold">
                 {formatDate(settings.submission_end)}
               </span>
             </p>
@@ -154,7 +152,7 @@ export const ContestSummary = () => {
           {/* Fee Allocation */}
           <div className="bg-card border border-border rounded-xl px-5 py-4">
             <p className="font-body text-muted-foreground text-xs mb-1">Pool Allocation</p>
-            <p className="font-display text-2xl sm:text-3xl text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">
+            <p className="font-display text-2xl sm:text-3xl text-red-500">
               {settings.fee_percentage}%
             </p>
             <p className="font-body text-muted-foreground text-xs mt-1">of fees to community</p>
@@ -164,7 +162,7 @@ export const ContestSummary = () => {
         {/* Link to full contest page */}
         <a
           href="/banner-contest"
-          className="inline-block font-body text-sm text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)] underline hover:text-red-400 transition-colors"
+          className="inline-block font-body text-sm text-red-500 underline hover:text-red-400 transition-colors"
         >
           View Full Contest Rules →
         </a>
