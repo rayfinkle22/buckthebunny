@@ -232,22 +232,31 @@ const BannerContest = () => {
           <div className="max-w-3xl mx-auto py-8">
             {/* Countdown Timer */}
             <div className="text-center mb-8">
-              <div className="flex items-center justify-center gap-3 sm:gap-5 font-display text-4xl sm:text-6xl font-bold tracking-wider">
+              <div className="flex items-end justify-center gap-3 sm:gap-5 font-display text-4xl sm:text-6xl font-bold tracking-wider">
                 <div className="flex flex-col items-center">
                   <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125">{pad(timeLeft.days)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">DAYS</span>
                 </div>
-                <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125 self-start mt-1 sm:mt-2">:</span>
+                <div className="flex flex-col items-center">
+                  <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125">:</span>
+                  <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
+                </div>
                 <div className="flex flex-col items-center">
                   <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125">{pad(timeLeft.hours)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">HRS</span>
                 </div>
-                <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125 self-start mt-1 sm:mt-2">:</span>
+                <div className="flex flex-col items-center">
+                  <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125">:</span>
+                  <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
+                </div>
                 <div className="flex flex-col items-center">
                   <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125">{pad(timeLeft.minutes)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">MIN</span>
                 </div>
-                <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125 self-start mt-1 sm:mt-2">:</span>
+                <div className="flex flex-col items-center">
+                  <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125">:</span>
+                  <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
+                </div>
                 <div className="flex flex-col items-center">
                   <span className="text-destructive drop-shadow-[0_0_12px_hsl(var(--destructive))] brightness-125">{pad(timeLeft.seconds)}</span>
                   <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">SEC</span>
