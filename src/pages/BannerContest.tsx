@@ -447,15 +447,15 @@ const BannerContest = () => {
 
               <p className="font-body text-foreground text-base sm:text-lg leading-relaxed">
                 Community members can submit custom banners (1500×500) over a set submission period which will occur from{" "}
-                <span className="font-semibold text-primary">
+                <span className="font-semibold text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">
                   {settings?.submission_start ? formatDate(settings.submission_start) : "TBD"}
                 </span>{" "}
                 to{" "}
-                <span className="font-semibold text-primary">
+                <span className="font-semibold text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)]">
                   {settings?.submission_end ? formatDate(settings.submission_end) : "TBD"}
                 </span>.{" "}
                 The banners are submitted in the BUCK{" "}
-                <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-primary underline hover:text-primary/80 transition-colors">Community</a>.
+                <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-red-500 [text-shadow:0_0_6px_rgba(239,68,68,0.7)] underline hover:text-red-400 transition-colors">Community</a>.
               </p>
 
               <div className="border-t border-border pt-4">
