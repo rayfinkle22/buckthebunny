@@ -37,7 +37,7 @@ const BannerContest = () => {
   const [formCountdownEnd, setFormCountdownEnd] = useState("");
   const [formFeePercent, setFormFeePercent] = useState("");
   const [formSubStart, setFormSubStart] = useState("");
-  const [formSubEnd, setFormSubEnd] = useState("");
+  // derivedSubEnd is computed from countdown end
   const [formWalletAddress, setFormWalletAddress] = useState("HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
 
   // Countdown state
@@ -48,6 +48,9 @@ const BannerContest = () => {
   const [solPrice, setSolPrice] = useState<number | null>(null);
 
   const { toast } = useToast();
+
+  // Derive submission end date from countdown end (date portion)
+  const derivedSubEnd = formCountdownEnd ? formCountdownEnd.split("T")[0] : "";
 
   // Fetch wallet balance via edge function
   useEffect(() => {
@@ -94,7 +97,6 @@ const BannerContest = () => {
       setFormCountdownEnd(`${y}-${m}-${d}T${h}:${min}`);
       setFormFeePercent(String(data.fee_percentage));
       setFormSubStart(data.submission_start);
-      setFormSubEnd(data.submission_end);
       setFormWalletAddress(data.wallet_address || "HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
     }
     setLoading(false);
@@ -178,7 +180,7 @@ const BannerContest = () => {
         countdown_end: estDate.toISOString(),
         fee_percentage: parseFloat(formFeePercent),
         submission_start: formSubStart,
-        submission_end: formSubEnd,
+        submission_end: derivedSubEnd,
         wallet_address: formWalletAddress,
       })
       .eq("id", settings.id);
@@ -402,9 +404,11 @@ const BannerContest = () => {
                       <Label className="text-foreground font-body text-sm">Submission End Date</Label>
                       <Input
                         type="date"
-                        value={formSubEnd}
-                        onChange={(e) => setFormSubEnd(e.target.value)}
+                        value={derivedSubEnd}
+                        disabled
+                        className="opacity-50 cursor-not-allowed"
                       />
+                      <p className="text-xs text-muted-foreground">Defaults to timer end date</p>
                     </div>
 
                     <div className="space-y-2">
