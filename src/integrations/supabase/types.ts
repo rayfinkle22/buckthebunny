@@ -14,7 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      contest_settings: {
+        Row: {
+          countdown_end: string
+          created_at: string
+          fee_percentage: number
+          id: string
+          submission_end: string
+          submission_start: string
+          updated_at: string
+        }
+        Insert: {
+          countdown_end?: string
+          created_at?: string
+          fee_percentage?: number
+          id?: string
+          submission_end?: string
+          submission_start?: string
+          updated_at?: string
+        }
+        Update: {
+          countdown_end?: string
+          created_at?: string
+          fee_percentage?: number
+          id?: string
+          submission_end?: string
+          submission_start?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
