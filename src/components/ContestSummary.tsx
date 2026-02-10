@@ -8,6 +8,7 @@ interface ContestSettings {
   submission_start: string;
   submission_end: string;
   wallet_address: string;
+  min_pool_display_usd: number;
 }
 
 const pad = (n: number) => String(n).padStart(2, "0");
@@ -84,6 +85,8 @@ export const ContestSummary = () => {
   if (!settings) return null;
 
   const usdValue = solBalance !== null && solPrice !== null ? (solBalance * solPrice).toFixed(2) : null;
+  const usdNum = usdValue ? parseFloat(usdValue) : 0;
+  const showPool = usdNum >= (settings.min_pool_display_usd ?? 100);
 
   return (
     <section className="px-3 sm:px-4 py-8 sm:py-12">
@@ -138,16 +141,18 @@ export const ContestSummary = () => {
             </p>
           </div>
 
-          {/* Pool Amount */}
-          <div className="bg-card border border-border rounded-xl px-5 py-4">
-            <p className="font-body text-muted-foreground text-sm sm:text-base mb-1">Reward Pool</p>
-            <p className="font-display text-2xl sm:text-3xl text-foreground">
-              {solBalance !== null ? `${solBalance.toFixed(4)} SOL` : "—"}
-            </p>
-            {usdValue && (
-              <p className="font-body text-muted-foreground text-sm sm:text-base mt-1">${usdValue} USD</p>
-            )}
-          </div>
+          {/* Pool Amount - only show if above threshold */}
+          {showPool && (
+            <div className="bg-card border border-border rounded-xl px-5 py-4">
+              <p className="font-body text-muted-foreground text-sm sm:text-base mb-1">Reward Pool</p>
+              <p className="font-display text-2xl sm:text-3xl text-foreground">
+                {solBalance !== null ? `${solBalance.toFixed(4)} SOL` : "—"}
+              </p>
+              {usdValue && (
+                <p className="font-body text-muted-foreground text-sm sm:text-base mt-1">${usdValue} USD</p>
+              )}
+            </div>
+          )}
 
           {/* Fee Allocation */}
           <div className="bg-card border border-border rounded-xl px-5 py-4">
