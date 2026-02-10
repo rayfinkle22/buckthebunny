@@ -4,7 +4,8 @@ import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Lock, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
+import buckEmoji from "@/assets/buck-emoji.png";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
@@ -15,6 +16,8 @@ interface ContestSettings {
   submission_start: string;
   submission_end: string;
 }
+
+const WALLET_ADDRESS = "HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L";
 
 const BannerContest = () => {
   const [password, setPassword] = useState("");
@@ -40,7 +43,57 @@ const BannerContest = () => {
   // Countdown state
   const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
+  // Wallet balance
+  const [solBalance, setSolBalance] = useState<number | null>(null);
+  const [solPrice, setSolPrice] = useState<number | null>(null);
+
   const { toast } = useToast();
+
+  // Fetch wallet balance
+  useEffect(() => {
+    const fetchBalance = async () => {
+      try {
+        const res = await fetch("https://api.mainnet-beta.solana.com", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            jsonrpc: "2.0",
+            id: 1,
+            method: "getBalance",
+            params: [WALLET_ADDRESS],
+          }),
+        });
+        const data = await res.json();
+        if (data.result?.value !== undefined) {
+          setSolBalance(data.result.value / 1e9);
+        }
+      } catch (e) {
+        console.error("Failed to fetch SOL balance", e);
+      }
+    };
+
+    const fetchPrice = async () => {
+      try {
+        const res = await fetch(
+          "https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd"
+        );
+        const data = await res.json();
+        if (data.solana?.usd) {
+          setSolPrice(data.solana.usd);
+        }
+      } catch (e) {
+        console.error("Failed to fetch SOL price", e);
+      }
+    };
+
+    fetchBalance();
+    fetchPrice();
+    const interval = setInterval(() => {
+      fetchBalance();
+      fetchPrice();
+    }, 60000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Fetch settings
   const fetchSettings = useCallback(async () => {
@@ -161,18 +214,29 @@ const BannerContest = () => {
   };
 
   const handleRestartCountdown = async () => {
-    if (!settings) return;
-    // Reset countdown to 7 days from now
-    const newEnd = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    if (!settings || !formCountdownEnd) return;
+    // Restart countdown using the currently set countdown end date
+    const estParts = formCountdownEnd.split("T");
+    const dateParts = estParts[0].split("-");
+    const timeParts = estParts[1].split(":");
+    const estDate = new Date(
+      Date.UTC(
+        parseInt(dateParts[0]),
+        parseInt(dateParts[1]) - 1,
+        parseInt(dateParts[2]),
+        parseInt(timeParts[0]) + 5,
+        parseInt(timeParts[1])
+      )
+    );
     const { error } = await supabase
       .from("contest_settings")
-      .update({ countdown_end: newEnd.toISOString() })
+      .update({ countdown_end: estDate.toISOString() })
       .eq("id", settings.id);
 
     if (error) {
       toast({ title: "Error restarting countdown", variant: "destructive" });
     } else {
-      toast({ title: "Countdown restarted (7 days from now)" });
+      toast({ title: "Countdown restarted" });
       fetchSettings();
     }
   };
@@ -203,7 +267,7 @@ const BannerContest = () => {
         {!unlocked ? (
           <div className="max-w-md mx-auto mt-20 text-center">
             <div className="bg-card border border-border rounded-xl p-8 shadow-lg">
-              <Lock className="w-12 h-12 text-primary mx-auto mb-4" />
+              <img src={buckEmoji} alt="Buck" className="w-12 h-12 mx-auto mb-4" />
               <h1 className="font-display text-2xl text-foreground mb-2">Banner Contest</h1>
               <p className="font-body text-muted-foreground mb-6 text-sm">
                 Enter the password to access this page.
@@ -264,14 +328,37 @@ const BannerContest = () => {
               </div>
             </div>
 
+            {/* Wallet Balance */}
+            <div className="text-center mb-8">
+              <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">
+                Community Reward Pool Balance:
+              </h2>
+              <div className="flex items-center justify-center gap-4 sm:gap-6">
+                <div className="bg-card border border-border rounded-xl px-5 py-3">
+                  <p className="font-body text-muted-foreground text-xs mb-1">SOL</p>
+                  <p className="font-display text-2xl sm:text-3xl text-foreground">
+                    {solBalance !== null ? solBalance.toFixed(4) : "—"}
+                  </p>
+                </div>
+                <div className="bg-card border border-border rounded-xl px-5 py-3">
+                  <p className="font-body text-muted-foreground text-xs mb-1">USD</p>
+                  <p className="font-display text-2xl sm:text-3xl text-foreground">
+                    {solBalance !== null && solPrice !== null
+                      ? `$${(solBalance * solPrice).toFixed(2)}`
+                      : "—"}
+                  </p>
+                </div>
+              </div>
+            </div>
+
             {/* Admin Lock Icon */}
             <div className="text-center mb-8">
               <button
                 onClick={() => setAdminOpen(!adminOpen)}
-                className="text-2xl hover:scale-110 transition-transform"
+                className="hover:scale-110 transition-transform"
                 title="Admin Settings"
               >
-                🔒
+                <img src={buckEmoji} alt="Admin" className="w-8 h-8 inline-block" />
               </button>
             </div>
 
@@ -348,7 +435,7 @@ const BannerContest = () => {
                       </Button>
                       <Button onClick={handleRestartCountdown} variant="outline" size="sm" className="gap-1">
                         <RotateCcw className="w-4 h-4" />
-                        Restart (7d)
+                        Restart
                       </Button>
                     </div>
                   </div>
@@ -359,7 +446,7 @@ const BannerContest = () => {
             {/* Contest Content */}
             <div className="bg-card border border-border rounded-xl p-6 sm:p-8 space-y-6 text-center">
               <h1 className="font-display text-3xl sm:text-4xl text-foreground">
-                Community Reward Pool
+                Contest Rules
               </h1>
 
               <p className="font-body text-foreground text-base sm:text-lg leading-relaxed">
