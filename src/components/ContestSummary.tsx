@@ -127,7 +127,7 @@ export const ContestSummary = () => {
           {/* Contest Dates */}
           <div className="bg-card border border-border rounded-xl px-5 py-4">
             <p className="font-body text-muted-foreground text-xs mb-1">Contest Period</p>
-            <p className="font-display text-sm sm:text-base text-foreground">
+            <p className="font-display text-base sm:text-lg text-foreground">
               <span className="text-red-500 font-semibold">
                 {formatDate(settings.submission_start)}
               </span>
