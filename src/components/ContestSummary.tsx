@@ -128,7 +128,7 @@ export const ContestSummary = () => {
         {/* Info Cards */}
         <div className={`grid gap-4 ${showPool ? 'grid-cols-1 sm:grid-cols-3' : 'grid-cols-1 sm:grid-cols-2 max-w-2xl mx-auto'}`}>
           {/* Contest Dates */}
-          <div className="bg-card border border-border rounded-xl px-5 py-4">
+          <div className="bg-card border border-border rounded-xl px-5 py-4 text-center">
             <p className="font-body text-muted-foreground text-sm sm:text-base mb-1">Contest Period</p>
             <p className="font-display text-lg sm:text-xl text-foreground">
               <span className="text-red-500 font-semibold">
