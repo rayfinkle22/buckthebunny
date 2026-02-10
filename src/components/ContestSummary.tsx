@@ -126,8 +126,8 @@ export const ContestSummary = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           {/* Contest Dates */}
           <div className="bg-card border border-border rounded-xl px-5 py-4">
-            <p className="font-body text-muted-foreground text-xs mb-1">Contest Period</p>
-            <p className="font-display text-base sm:text-lg text-foreground">
+            <p className="font-body text-muted-foreground text-sm sm:text-base mb-1">Contest Period</p>
+            <p className="font-display text-lg sm:text-xl text-foreground">
               <span className="text-red-500 font-semibold">
                 {formatDate(settings.submission_start)}
               </span>
@@ -140,22 +140,22 @@ export const ContestSummary = () => {
 
           {/* Pool Amount */}
           <div className="bg-card border border-border rounded-xl px-5 py-4">
-            <p className="font-body text-muted-foreground text-xs mb-1">Reward Pool</p>
+            <p className="font-body text-muted-foreground text-sm sm:text-base mb-1">Reward Pool</p>
             <p className="font-display text-2xl sm:text-3xl text-foreground">
               {solBalance !== null ? `${solBalance.toFixed(4)} SOL` : "—"}
             </p>
             {usdValue && (
-              <p className="font-body text-muted-foreground text-xs mt-1">${usdValue} USD</p>
+              <p className="font-body text-muted-foreground text-sm sm:text-base mt-1">${usdValue} USD</p>
             )}
           </div>
 
           {/* Fee Allocation */}
           <div className="bg-card border border-border rounded-xl px-5 py-4">
-            <p className="font-body text-muted-foreground text-xs mb-1">Pool Allocation</p>
+            <p className="font-body text-muted-foreground text-sm sm:text-base mb-1">Pool Allocation</p>
             <p className="font-display text-2xl sm:text-3xl text-red-500">
               {settings.fee_percentage}%
             </p>
-            <p className="font-body text-muted-foreground text-xs mt-1">of fees to community</p>
+            <p className="font-body text-muted-foreground text-sm sm:text-base mt-1">of fees to community</p>
           </div>
         </div>
 
