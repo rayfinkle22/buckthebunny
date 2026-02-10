@@ -20,7 +20,7 @@ interface ContestSettings {
 
 const BannerContest = () => {
   const [password, setPassword] = useState("");
-  const [unlocked, setUnlocked] = useState(false);
+  const [unlocked, setUnlocked] = useState(true);
   const [error, setError] = useState(false);
 
   // Admin panel
