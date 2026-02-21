@@ -50,6 +50,33 @@ export type Database = {
         }
         Relationships: []
       }
+      contest_submissions: {
+        Row: {
+          id: string
+          post_link: string
+          submitted_at: string
+          token_balance: number | null
+          wallet_address: string
+          x_handle: string
+        }
+        Insert: {
+          id?: string
+          post_link: string
+          submitted_at?: string
+          token_balance?: number | null
+          wallet_address: string
+          x_handle: string
+        }
+        Update: {
+          id?: string
+          post_link?: string
+          submitted_at?: string
+          token_balance?: number | null
+          wallet_address?: string
+          x_handle?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
