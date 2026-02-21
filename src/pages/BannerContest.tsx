@@ -7,7 +7,7 @@ import { Label } from "@/components/ui/label";
 import { RotateCcw } from "lucide-react";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import buckEmoji from "@/assets/buck-emoji.png";
-import countdownVideo from "@/assets/countdown-animation.mp4";
+import { CountdownVideo } from "@/components/CountdownVideo";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
@@ -375,15 +375,7 @@ const BannerContest = () => {
           <div className="max-w-3xl mx-auto py-8">
             {/* Countdown Animation */}
             <div className="flex justify-center mb-8">
-              <video
-                src={countdownVideo}
-                autoPlay
-                loop
-                muted
-                playsInline
-                preload="auto"
-                className="w-full max-w-2xl rounded-xl"
-              />
+              <CountdownVideo className="w-full max-w-2xl" />
             </div>
 
 
