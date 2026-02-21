@@ -202,6 +202,18 @@ const BannerContest = () => {
     setSubmitting(false);
   };
 
+  // Load Twitter embed script
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://platform.x.com/widgets.js";
+    script.async = true;
+    script.charset = "utf-8";
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
   // Countdown timer
   useEffect(() => {
     if (!settings) return;
@@ -630,6 +642,16 @@ const BannerContest = () => {
                   </div>
                 </div>
               )}
+            </div>
+
+            {/* Past Contest Winners */}
+            <div className="bg-card border border-border rounded-xl p-6 sm:p-8 text-center mt-8">
+              <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-6">Past Contest Winners</h2>
+              <div className="flex justify-center">
+                <blockquote className="twitter-tweet" data-theme="dark">
+                  <a href="https://x.com/VoodooVelvet/status/2022732904292585720">Loading tweet...</a>
+                </blockquote>
+              </div>
             </div>
           </div>
         )}
