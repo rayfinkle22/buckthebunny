@@ -527,7 +527,7 @@ const BannerContest = () => {
             {/* Contest Content */}
             <div className="bg-card border border-border rounded-xl p-6 sm:p-8 space-y-6 text-center">
               <h1 className="font-display text-3xl sm:text-4xl text-foreground">
-                Contest Rules
+                Prize Pool & Contest Rules
               </h1>
 
               <p className="font-body text-foreground text-base sm:text-lg leading-relaxed">
