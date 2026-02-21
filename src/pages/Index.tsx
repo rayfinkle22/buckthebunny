@@ -1,4 +1,5 @@
 import { Header } from "@/components/Header";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { HeroSection } from "@/components/HeroSection";
 import { DexChart } from "@/components/DexChart";
 import { Footer } from "@/components/Footer";
@@ -12,6 +13,7 @@ const Index = () => {
         <DexChart />
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };
