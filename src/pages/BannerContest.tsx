@@ -47,10 +47,9 @@ const BannerContest = () => {
   const [loading, setLoading] = useState(true);
 
   // Admin form fields
-  const [formCountdownEnd, setFormCountdownEnd] = useState("");
-  const [formFeePercent, setFormFeePercent] = useState("");
   const [formSubStart, setFormSubStart] = useState("");
-  // derivedSubEnd is computed from countdown end
+  const [formDurationDays, setFormDurationDays] = useState("7");
+  const [formFeePercent, setFormFeePercent] = useState("");
   const [formWalletAddress, setFormWalletAddress] = useState("HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
   const [formMinPoolUsd, setFormMinPoolUsd] = useState("100");
 
@@ -70,8 +69,14 @@ const BannerContest = () => {
 
   const { toast } = useToast();
 
-  // Derive submission end date from countdown end (date portion)
-  const derivedSubEnd = formCountdownEnd ? formCountdownEnd.split("T")[0] : "";
+  // Compute end date from start + duration
+  const computedEndDate = formSubStart && formDurationDays
+    ? (() => {
+        const start = new Date(formSubStart + "T00:00:00");
+        start.setDate(start.getDate() + parseInt(formDurationDays));
+        return start.toISOString().split("T")[0];
+      })()
+    : "";
 
   // Fetch wallet balance via edge function
   useEffect(() => {
@@ -106,18 +111,13 @@ const BannerContest = () => {
     if (!error && data) {
       setSettings(data as ContestSettings);
       // Pre-fill admin form
-      const end = new Date(data.countdown_end);
-      // Format for datetime-local input (in EST)
-      const estOffset = end.toLocaleString("en-US", { timeZone: "America/New_York" });
-      const estDate = new Date(estOffset);
-      const y = estDate.getFullYear();
-      const m = String(estDate.getMonth() + 1).padStart(2, "0");
-      const d = String(estDate.getDate()).padStart(2, "0");
-      const h = String(estDate.getHours()).padStart(2, "0");
-      const min = String(estDate.getMinutes()).padStart(2, "0");
-      setFormCountdownEnd(`${y}-${m}-${d}T${h}:${min}`);
-      setFormFeePercent(String(data.fee_percentage));
       setFormSubStart(data.submission_start);
+      // Calculate duration from start/end dates
+      const start = new Date(data.submission_start + "T00:00:00");
+      const end = new Date(data.submission_end + "T00:00:00");
+      const diffDays = Math.round((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+      setFormDurationDays(String(diffDays > 0 ? diffDays : 7));
+      setFormFeePercent(String(data.fee_percentage));
       setFormWalletAddress(data.wallet_address || "HwaGGGWfVKVTkqwjAiCUhubVBiJ6ip7QLP7f5VquzC7L");
       setFormMinPoolUsd(String(data.min_pool_display_usd ?? 100));
     }
@@ -252,33 +252,21 @@ const BannerContest = () => {
   };
 
   const handleSaveSettings = async () => {
-    if (!settings) return;
+    if (!settings || !formSubStart || !formDurationDays) return;
 
-    // Convert the EST datetime-local to UTC
-    const estDateStr = formCountdownEnd;
-    // Parse as EST by appending timezone
-    const utcDate = new Date(estDateStr + ":00");
-    // Create proper EST date
-    const estParts = estDateStr.split("T");
-    const dateParts = estParts[0].split("-");
-    const timeParts = estParts[1].split(":");
-    const estDate = new Date(
-      Date.UTC(
-        parseInt(dateParts[0]),
-        parseInt(dateParts[1]) - 1,
-        parseInt(dateParts[2]),
-        parseInt(timeParts[0]) + 5, // EST is UTC-5
-        parseInt(timeParts[1])
-      )
-    );
+    // Compute countdown end from start + duration
+    const start = new Date(formSubStart + "T00:00:00");
+    start.setDate(start.getDate() + parseInt(formDurationDays));
+    const countdownEnd = start.toISOString();
+    const submissionEnd = start.toISOString().split("T")[0];
 
     const { error } = await supabase
       .from("contest_settings")
       .update({
-        countdown_end: estDate.toISOString(),
+        countdown_end: countdownEnd,
         fee_percentage: parseFloat(formFeePercent),
         submission_start: formSubStart,
-        submission_end: derivedSubEnd,
+        submission_end: submissionEnd,
         wallet_address: formWalletAddress,
         min_pool_display_usd: parseFloat(formMinPoolUsd),
       })
@@ -293,23 +281,12 @@ const BannerContest = () => {
   };
 
   const handleRestartCountdown = async () => {
-    if (!settings || !formCountdownEnd) return;
-    // Restart countdown using the currently set countdown end date
-    const estParts = formCountdownEnd.split("T");
-    const dateParts = estParts[0].split("-");
-    const timeParts = estParts[1].split(":");
-    const estDate = new Date(
-      Date.UTC(
-        parseInt(dateParts[0]),
-        parseInt(dateParts[1]) - 1,
-        parseInt(dateParts[2]),
-        parseInt(timeParts[0]) + 5,
-        parseInt(timeParts[1])
-      )
-    );
+    if (!settings || !formSubStart || !formDurationDays) return;
+    const start = new Date(formSubStart + "T00:00:00");
+    start.setDate(start.getDate() + parseInt(formDurationDays));
     const { error } = await supabase
       .from("contest_settings")
-      .update({ countdown_end: estDate.toISOString() })
+      .update({ countdown_end: start.toISOString() })
       .eq("id", settings.id);
 
     if (error) {
@@ -420,12 +397,36 @@ const BannerContest = () => {
                     <h3 className="font-display text-lg text-foreground">⚙️ Admin Settings</h3>
 
                     <div className="space-y-2">
-                      <Label className="text-foreground font-body text-sm">Countdown End (EST)</Label>
+                      <Label className="text-foreground font-body text-sm">Contest Start Date</Label>
                       <Input
-                        type="datetime-local"
-                        value={formCountdownEnd}
-                        onChange={(e) => setFormCountdownEnd(e.target.value)}
+                        type="date"
+                        value={formSubStart}
+                        onChange={(e) => setFormSubStart(e.target.value)}
                       />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-foreground font-body text-sm">Contest Duration</Label>
+                      <select
+                        value={formDurationDays}
+                        onChange={(e) => setFormDurationDays(e.target.value)}
+                        className="w-full rounded-md border border-border bg-card text-foreground px-3 py-2 text-sm font-body"
+                      >
+                        {[3, 5, 7, 10, 14, 21, 30].map((d) => (
+                          <option key={d} value={String(d)}>{d} days</option>
+                        ))}
+                      </select>
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label className="text-foreground font-body text-sm">Contest End Date</Label>
+                      <Input
+                        type="date"
+                        value={computedEndDate}
+                        disabled
+                        className="opacity-50 cursor-not-allowed"
+                      />
+                      <p className="text-xs text-muted-foreground">Auto-calculated from start + duration</p>
                     </div>
 
                     <div className="space-y-2">
@@ -437,26 +438,6 @@ const BannerContest = () => {
                         value={formFeePercent}
                         onChange={(e) => setFormFeePercent(e.target.value)}
                       />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label className="text-foreground font-body text-sm">Submission Start Date</Label>
-                      <Input
-                        type="date"
-                        value={formSubStart}
-                        onChange={(e) => setFormSubStart(e.target.value)}
-                      />
-                    </div>
-
-                    <div className="space-y-2">
-                      <Label className="text-foreground font-body text-sm">Submission End Date</Label>
-                      <Input
-                        type="date"
-                        value={derivedSubEnd}
-                        disabled
-                        className="opacity-50 cursor-not-allowed"
-                      />
-                      <p className="text-xs text-muted-foreground">Defaults to timer end date</p>
                     </div>
 
                     <div className="space-y-2">
