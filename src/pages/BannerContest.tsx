@@ -202,23 +202,6 @@ const BannerContest = () => {
     setSubmitting(false);
   };
 
-  // Load Twitter embed script
-  useEffect(() => {
-    if (!unlocked) return;
-    const loadTwitter = () => {
-      if ((window as any).twttr?.widgets) {
-        (window as any).twttr.widgets.load();
-      } else {
-        const script = document.createElement("script");
-        script.src = "https://platform.x.com/widgets.js";
-        script.async = true;
-        document.body.appendChild(script);
-      }
-    };
-    // Small delay to ensure DOM is ready
-    const timer = setTimeout(loadTwitter, 500);
-    return () => clearTimeout(timer);
-  }, [unlocked]);
 
   // Countdown timer
   useEffect(() => {
@@ -678,9 +661,13 @@ const BannerContest = () => {
             <div className="bg-card border border-border rounded-xl p-6 sm:p-8 text-center mt-8">
               <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-6">Past Contest Winners</h2>
               <div className="flex justify-center">
-                <blockquote className="twitter-tweet" data-theme="dark">
-                  <a href="https://x.com/VoodooVelvet/status/2022732904292585720">Loading tweet...</a>
-                </blockquote>
+                <iframe
+                  src="https://platform.x.com/embed/Post.html?id=2022732904292585720&theme=dark"
+                  className="w-full max-w-[550px] border-0"
+                  height="600"
+                  allowFullScreen
+                  title="Past Contest Winner Tweet"
+                />
               </div>
             </div>
           </div>
