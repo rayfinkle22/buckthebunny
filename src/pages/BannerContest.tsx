@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { RotateCcw } from "lucide-react";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import buckEmoji from "@/assets/buck-emoji.png";
 import countdownVideo from "@/assets/countdown-animation.mp4";
 import { supabase } from "@/integrations/supabase/client";
@@ -661,6 +662,7 @@ const BannerContest = () => {
         )}
       </main>
       <Footer />
+      <ScrollToTop />
     </div>
   );
 };

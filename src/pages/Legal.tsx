@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { ScrollToTop } from "@/components/ScrollToTop";
 import { ArrowLeft } from "lucide-react";
 
 const Legal = () => {
@@ -137,6 +138,7 @@ const Legal = () => {
           </Link>
         </div>
       </div>
+      <ScrollToTop />
     </div>
   );
 };
