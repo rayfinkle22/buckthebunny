@@ -657,19 +657,6 @@ const BannerContest = () => {
               )}
             </div>
 
-            {/* Past Contest Winners */}
-            <div className="bg-card border border-border rounded-xl p-6 sm:p-8 text-center mt-8">
-              <h2 className="font-display text-2xl sm:text-3xl text-foreground mb-6">Past Contest Winners</h2>
-              <div className="flex justify-center">
-                <iframe
-                  src="https://platform.x.com/embed/Post.html?id=2022732904292585720&theme=dark"
-                  className="w-full max-w-[550px] border-0"
-                  height="600"
-                  allowFullScreen
-                  title="Past Contest Winner Tweet"
-                />
-              </div>
-            </div>
           </div>
         )}
       </main>
