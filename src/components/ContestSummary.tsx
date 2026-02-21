@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import countdownVideo from "@/assets/countdown-animation.mp4";
+import { CountdownVideo } from "@/components/CountdownVideo";
+
 
 interface ContestSettings {
   id: string;
@@ -96,15 +97,7 @@ export const ContestSummary = () => {
 
         {/* Countdown Animation */}
         <div className="flex justify-center">
-          <video
-            src={countdownVideo}
-            autoPlay
-            loop
-            muted
-            playsInline
-            preload="auto"
-            className="w-full max-w-2xl rounded-xl"
-          />
+          <CountdownVideo className="w-full max-w-2xl" />
         </div>
 
         {/* Info Cards */}
