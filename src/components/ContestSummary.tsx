@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import countdownVideo from "@/assets/countdown-animation.mp4";
 
 interface ContestSettings {
   id: string;
@@ -91,38 +92,19 @@ export const ContestSummary = () => {
   return (
     <section className="px-3 sm:px-4 py-8 sm:py-12">
       <div className="max-w-3xl mx-auto text-center space-y-6">
-        <h2 className="font-display text-3xl sm:text-4xl text-foreground">Banner Contest</h2>
+        <h2 className="font-display text-3xl sm:text-4xl text-foreground">Weekly Contest</h2>
 
-        {/* Countdown Timer */}
-        <div className="flex items-start justify-center gap-3 sm:gap-5 font-display text-4xl sm:text-6xl font-bold tracking-wider">
-          <div className="flex flex-col items-center">
-            <span className="text-red-500">{pad(timeLeft.days)}</span>
-            <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">DAYS</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-red-500">:</span>
-            <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-red-500">{pad(timeLeft.hours)}</span>
-            <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">HRS</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-red-500">:</span>
-            <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-red-500">{pad(timeLeft.minutes)}</span>
-            <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">MIN</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-red-500">:</span>
-            <span className="text-xs sm:text-sm font-body text-transparent mt-1 select-none">.</span>
-          </div>
-          <div className="flex flex-col items-center">
-            <span className="text-red-500">{pad(timeLeft.seconds)}</span>
-            <span className="text-xs sm:text-sm font-body text-muted-foreground mt-1">SEC</span>
-          </div>
+        {/* Countdown Animation */}
+        <div className="flex justify-center">
+          <video
+            src={countdownVideo}
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="auto"
+            className="w-full max-w-2xl rounded-xl"
+          />
         </div>
 
         {/* Info Cards */}
