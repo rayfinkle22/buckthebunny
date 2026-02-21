@@ -445,7 +445,7 @@ const BannerContest = () => {
               </p>
 
               <p className="font-body text-foreground text-base sm:text-lg leading-relaxed">
-                Community members can submit custom banners (1500×500) over a set submission period which will occur from{" "}
+                The contest will run from{" "}
                 <span className="font-semibold text-red-500">
                   {settings?.submission_start ? formatDate(settings.submission_start) : "TBD"}
                 </span>{" "}
@@ -453,7 +453,7 @@ const BannerContest = () => {
                 <span className="font-semibold text-red-500">
                   {settings?.submission_end ? formatDate(settings.submission_end) : "TBD"}
                 </span>.{" "}
-                The banners are submitted in the BUCK{" "}
+                Link to the{" "}
                 <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-red-500 underline hover:text-red-400 transition-colors">Community</a>.
               </p>
 
