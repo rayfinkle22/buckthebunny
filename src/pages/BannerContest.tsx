@@ -291,33 +291,6 @@ const BannerContest = () => {
               />
             </div>
 
-            {/* Wallet Balance - only show if above threshold */}
-            {(() => {
-              const usdVal = solBalance !== null && solPrice !== null ? solBalance * solPrice : 0;
-              const threshold = settings?.min_pool_display_usd ?? 100;
-              if (usdVal < threshold) return null;
-              return (
-                <div className="text-center mb-8">
-                  <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">
-                    Community Reward Pool Balance:
-                  </h2>
-                  <div className="flex items-center justify-center gap-4 sm:gap-6">
-                    <div className="bg-card border border-border rounded-xl px-5 py-3">
-                      <p className="font-body text-muted-foreground text-xs mb-1">SOL</p>
-                      <p className="font-display text-2xl sm:text-3xl text-foreground">
-                        {solBalance !== null ? solBalance.toFixed(4) : "—"}
-                      </p>
-                    </div>
-                    <div className="bg-card border border-border rounded-xl px-5 py-3">
-                      <p className="font-body text-muted-foreground text-xs mb-1">USD</p>
-                      <p className="font-display text-2xl sm:text-3xl text-foreground">
-                        {`$${usdVal.toFixed(2)}`}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              );
-            })()}
 
             {/* Admin Lock Icon */}
             <div className="text-center mb-8">
@@ -456,6 +429,34 @@ const BannerContest = () => {
                 Link to the{" "}
                 <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="font-semibold text-red-500 underline hover:text-red-400 transition-colors">Community</a>.
               </p>
+
+              {/* Wallet Balance - only show if above threshold */}
+              {(() => {
+                const usdVal = solBalance !== null && solPrice !== null ? solBalance * solPrice : 0;
+                const threshold = settings?.min_pool_display_usd ?? 100;
+                if (usdVal < threshold) return null;
+                return (
+                  <div className="text-center">
+                    <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">
+                      Community Reward Pool Balance:
+                    </h2>
+                    <div className="flex items-center justify-center gap-4 sm:gap-6">
+                      <div className="bg-card border border-border rounded-xl px-5 py-3">
+                        <p className="font-body text-muted-foreground text-xs mb-1">SOL</p>
+                        <p className="font-display text-2xl sm:text-3xl text-foreground">
+                          {solBalance !== null ? solBalance.toFixed(4) : "—"}
+                        </p>
+                      </div>
+                      <div className="bg-card border border-border rounded-xl px-5 py-3">
+                        <p className="font-body text-muted-foreground text-xs mb-1">USD</p>
+                        <p className="font-display text-2xl sm:text-3xl text-foreground">
+                          {`$${usdVal.toFixed(2)}`}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })()}
 
               <div className="border-t border-border pt-4">
                 <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">Reward:</h2>
