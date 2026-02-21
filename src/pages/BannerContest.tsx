@@ -9,6 +9,16 @@ import buckEmoji from "@/assets/buck-emoji.png";
 import countdownVideo from "@/assets/countdown-animation.mp4";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
+
+interface ContestSubmission {
+  id: string;
+  wallet_address: string;
+  x_handle: string;
+  post_link: string;
+  token_balance: number | null;
+  submitted_at: string;
+}
 
 interface ContestSettings {
   id: string;
@@ -49,6 +59,13 @@ const BannerContest = () => {
   // Wallet balance
   const [solBalance, setSolBalance] = useState<number | null>(null);
   const [solPrice, setSolPrice] = useState<number | null>(null);
+
+  // Submission form
+  const [subWallet, setSubWallet] = useState("");
+  const [subXHandle, setSubXHandle] = useState("");
+  const [subPostLink, setSubPostLink] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submissions, setSubmissions] = useState<ContestSubmission[]>([]);
 
   const { toast } = useToast();
 
@@ -109,6 +126,81 @@ const BannerContest = () => {
   useEffect(() => {
     fetchSettings();
   }, [fetchSettings]);
+
+  // Fetch submissions
+  const fetchSubmissions = useCallback(async () => {
+    const { data } = await supabase
+      .from("contest_submissions")
+      .select("*")
+      .order("submitted_at", { ascending: true });
+    if (data) setSubmissions(data as ContestSubmission[]);
+  }, []);
+
+  useEffect(() => {
+    fetchSubmissions();
+  }, [fetchSubmissions]);
+
+  // Handle contest submission
+  const handleSubmitEntry = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const trimmedHandle = subXHandle.trim();
+    if (!trimmedHandle.startsWith("@")) {
+      toast({ title: "X handle must start with @", description: 'Example: @yourhandle', variant: "destructive" });
+      return;
+    }
+    if (!subWallet.trim() || !subPostLink.trim()) {
+      toast({ title: "All fields are required", variant: "destructive" });
+      return;
+    }
+
+    setSubmitting(true);
+    try {
+      // Insert submission
+      const { error: insertError } = await supabase
+        .from("contest_submissions")
+        .insert({
+          wallet_address: subWallet.trim(),
+          x_handle: trimmedHandle,
+          post_link: subPostLink.trim(),
+        });
+
+      if (insertError) {
+        if (insertError.message.includes("unique")) {
+          toast({ title: "Already submitted", description: "This wallet or X handle has already been used.", variant: "destructive" });
+        } else {
+          toast({ title: "Submission failed", description: insertError.message, variant: "destructive" });
+        }
+        setSubmitting(false);
+        return;
+      }
+
+      // Fetch token balance for the wallet
+      try {
+        const { data: balanceData } = await supabase.functions.invoke("token-balance", {
+          body: { walletAddress: subWallet.trim() },
+        });
+
+        if (balanceData?.balance !== undefined) {
+          await supabase
+            .from("contest_submissions")
+            .update({ token_balance: balanceData.balance })
+            .eq("wallet_address", subWallet.trim());
+        }
+      } catch (balErr) {
+        console.error("Failed to fetch token balance", balErr);
+      }
+
+      toast({ title: "Entry submitted!" });
+      setSubWallet("");
+      setSubXHandle("");
+      setSubPostLink("");
+      fetchSubmissions();
+    } catch (err) {
+      toast({ title: "Submission failed", variant: "destructive" });
+    }
+    setSubmitting(false);
+  };
 
   // Countdown timer
   useEffect(() => {
@@ -458,13 +550,86 @@ const BannerContest = () => {
                 );
               })()}
 
-              <div className="border-t border-border pt-4">
-                <h2 className="font-display text-xl sm:text-2xl text-foreground mb-3">Reward:</h2>
-                <ul className="font-body text-foreground text-base sm:text-lg leading-relaxed space-y-2 list-none">
-                  <li>The winner receives the Community Reward Pool</li>
-                  <li>Their banner will be featured for one full week across the community and on the DEX</li>
-                </ul>
+              <div className="border-t border-border pt-6">
+                <h2 className="font-display text-xl sm:text-2xl text-foreground mb-4">Submit your Entry</h2>
+                <form onSubmit={handleSubmitEntry} className="space-y-4 text-left max-w-md mx-auto">
+                  <div className="space-y-2">
+                    <Label className="text-foreground font-body text-sm">Solana Wallet Address</Label>
+                    <Input
+                      type="text"
+                      placeholder="Your Solana wallet address"
+                      value={subWallet}
+                      onChange={(e) => setSubWallet(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-foreground font-body text-sm">X Handle</Label>
+                    <Input
+                      type="text"
+                      placeholder="@yourhandle"
+                      value={subXHandle}
+                      onChange={(e) => setSubXHandle(e.target.value)}
+                      required
+                    />
+                    <p className="text-xs text-muted-foreground">Submit as "@yourhandle" (must start with @)</p>
+                  </div>
+                  <div className="space-y-2">
+                    <Label className="text-foreground font-body text-sm">Link to Post</Label>
+                    <Input
+                      type="url"
+                      placeholder="https://x.com/..."
+                      value={subPostLink}
+                      onChange={(e) => setSubPostLink(e.target.value)}
+                      required
+                    />
+                  </div>
+                  <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting}>
+                    {submitting ? "Submitting..." : "Submit Entry"}
+                  </Button>
+                </form>
               </div>
+
+              {/* Submissions Table */}
+              {submissions.length > 0 && (
+                <div className="border-t border-border pt-6">
+                  <h2 className="font-display text-xl sm:text-2xl text-foreground mb-4">Submissions</h2>
+                  <div className="overflow-x-auto">
+                    <Table>
+                      <TableHeader>
+                        <TableRow>
+                          <TableHead>X Handle</TableHead>
+                          <TableHead>Wallet</TableHead>
+                          <TableHead>Post</TableHead>
+                          <TableHead>$BUCK Balance</TableHead>
+                          <TableHead>Submitted</TableHead>
+                        </TableRow>
+                      </TableHeader>
+                      <TableBody>
+                        {submissions.map((sub) => (
+                          <TableRow key={sub.id}>
+                            <TableCell className="font-body">{sub.x_handle}</TableCell>
+                            <TableCell className="font-body text-xs">
+                              {sub.wallet_address.slice(0, 4)}...{sub.wallet_address.slice(-4)}
+                            </TableCell>
+                            <TableCell>
+                              <a href={sub.post_link} target="_blank" rel="noopener noreferrer" className="text-red-500 underline hover:text-red-400 text-sm">
+                                View
+                              </a>
+                            </TableCell>
+                            <TableCell className="font-display">
+                              {sub.token_balance !== null ? Number(sub.token_balance).toLocaleString() : "—"}
+                            </TableCell>
+                            <TableCell className="font-body text-xs text-muted-foreground">
+                              {new Date(sub.submitted_at).toLocaleDateString()}
+                            </TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         )}
