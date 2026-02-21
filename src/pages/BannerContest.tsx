@@ -569,7 +569,7 @@ const BannerContest = () => {
               <div className="border-t border-border pt-6">
                 <h2 className="font-display text-xl sm:text-2xl text-foreground mb-2">Submit your Entry</h2>
                 <p className="font-body italic text-muted-foreground text-sm mb-4">
-                  <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">Submit your Entry in the Community first!</a>
+                  Submit your Entry in the <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="text-red-500 underline hover:text-red-400 transition-colors">Community</a> first!
                 </p>
                 <form onSubmit={handleSubmitEntry} className="space-y-4 text-left max-w-md mx-auto">
                   <div className="space-y-2">
