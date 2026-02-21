@@ -397,6 +397,7 @@ const BannerContest = () => {
                 loop
                 muted
                 playsInline
+                preload="auto"
                 className="w-full max-w-2xl rounded-xl"
               />
             </div>

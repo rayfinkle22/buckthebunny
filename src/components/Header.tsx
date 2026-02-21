@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useMarketData, formatMarketCap, TOKEN_ADDRESS } from "@/hooks/useMarketData";
 import { Menu, X, ChartLine, Home, Rocket, Scale, ImageIcon } from "lucide-react";
 import buckLogo from "@/assets/buck-logo.jpeg";
@@ -23,11 +23,18 @@ const XIcon = () => (
 export const Header = () => {
   const { marketCap, isLoading } = useMarketData();
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
+    if (location.pathname !== "/") {
+      navigate("/");
+      // After navigation, scroll will happen on the Index page
+    } else {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
     }
     setMenuOpen(false);
   };
