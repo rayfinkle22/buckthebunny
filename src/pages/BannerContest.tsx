@@ -204,15 +204,21 @@ const BannerContest = () => {
 
   // Load Twitter embed script
   useEffect(() => {
-    const script = document.createElement("script");
-    script.src = "https://platform.x.com/widgets.js";
-    script.async = true;
-    script.charset = "utf-8";
-    document.body.appendChild(script);
-    return () => {
-      document.body.removeChild(script);
+    if (!unlocked) return;
+    const loadTwitter = () => {
+      if ((window as any).twttr?.widgets) {
+        (window as any).twttr.widgets.load();
+      } else {
+        const script = document.createElement("script");
+        script.src = "https://platform.x.com/widgets.js";
+        script.async = true;
+        document.body.appendChild(script);
+      }
     };
-  }, []);
+    // Small delay to ensure DOM is ready
+    const timer = setTimeout(loadTwitter, 500);
+    return () => clearTimeout(timer);
+  }, [unlocked]);
 
   // Countdown timer
   useEffect(() => {
@@ -504,6 +510,29 @@ const BannerContest = () => {
                       <Button onClick={handleRestartCountdown} variant="outline" size="sm" className="gap-1">
                         <RotateCcw className="w-4 h-4" />
                         Restart
+                      </Button>
+                    </div>
+
+                    <div className="border-t border-border pt-4 mt-4">
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="w-full"
+                        onClick={async () => {
+                          if (!confirm("Are you sure you want to delete ALL contest entries? This cannot be undone.")) return;
+                          const { error } = await supabase
+                            .from("contest_submissions")
+                            .delete()
+                            .neq("id", "00000000-0000-0000-0000-000000000000");
+                          if (error) {
+                            toast({ title: "Error clearing entries", description: error.message, variant: "destructive" });
+                          } else {
+                            toast({ title: "All entries cleared" });
+                            fetchSubmissions();
+                          }
+                        }}
+                      >
+                        Clear All Contest Entries
                       </Button>
                     </div>
                   </div>
