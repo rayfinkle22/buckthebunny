@@ -624,7 +624,7 @@ const BannerContest = () => {
                     <div className="space-y-2">
                       <Label className="text-foreground font-body text-sm">Link to Post</Label>
                       <Input
-                        type="url"
+                        type="text"
                         placeholder="https://x.com/..."
                         value={subPostLink}
                         onChange={(e) => setSubPostLink(e.target.value)}
