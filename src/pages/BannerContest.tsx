@@ -129,13 +129,34 @@ const BannerContest = () => {
     fetchSettings();
   }, [fetchSettings]);
 
-  // Fetch submissions
+  // Fetch submissions and refresh token balances
   const fetchSubmissions = useCallback(async () => {
     const { data } = await supabase
       .from("contest_submissions")
       .select("*")
       .order("submitted_at", { ascending: true });
-    if (data) setSubmissions(data as ContestSubmission[]);
+    if (data) {
+      setSubmissions(data as ContestSubmission[]);
+      // Refresh token balances in background
+      for (const sub of data) {
+        try {
+          const { data: balanceData } = await supabase.functions.invoke("token-balance", {
+            body: { walletAddress: sub.wallet_address },
+          });
+          if (balanceData?.balance !== undefined && balanceData.balance !== sub.token_balance) {
+            await supabase
+              .from("contest_submissions")
+              .update({ token_balance: balanceData.balance })
+              .eq("id", sub.id);
+            setSubmissions(prev =>
+              prev.map(s => s.id === sub.id ? { ...s, token_balance: balanceData.balance } : s)
+            );
+          }
+        } catch (e) {
+          console.error("Failed to refresh balance for", sub.wallet_address, e);
+        }
+      }
+    }
   }, []);
 
   useEffect(() => {
