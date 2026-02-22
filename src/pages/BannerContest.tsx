@@ -65,6 +65,7 @@ const BannerContest = () => {
   const [subXHandle, setSubXHandle] = useState("");
   const [subPostLink, setSubPostLink] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
   const [submissions, setSubmissions] = useState<ContestSubmission[]>([]);
 
   const { toast } = useToast();
@@ -192,10 +193,10 @@ const BannerContest = () => {
         console.error("Failed to fetch token balance", balErr);
       }
 
-      toast({ title: "Entry submitted!" });
       setSubWallet("");
       setSubXHandle("");
       setSubPostLink("");
+      setSubmitted(true);
       fetchSubmissions();
     } catch (err) {
       toast({ title: "Submission failed", variant: "destructive" });
@@ -493,6 +494,47 @@ const BannerContest = () => {
                         Clear All Contest Entries
                       </Button>
                     </div>
+
+                    {/* Submissions Table - Admin Only */}
+                    {submissions.length > 0 && (
+                      <div className="border-t border-border pt-4 mt-4">
+                        <h4 className="font-display text-base text-foreground mb-3">Submissions ({submissions.length})</h4>
+                        <div className="overflow-x-auto">
+                          <Table>
+                            <TableHeader>
+                              <TableRow>
+                                <TableHead>X Handle</TableHead>
+                                <TableHead>Wallet</TableHead>
+                                <TableHead>Post</TableHead>
+                                <TableHead>$BUCK Balance</TableHead>
+                                <TableHead>Submitted</TableHead>
+                              </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                              {submissions.map((sub) => (
+                                <TableRow key={sub.id}>
+                                  <TableCell className="font-body">{sub.x_handle}</TableCell>
+                                  <TableCell className="font-body text-xs">
+                                    {sub.wallet_address.slice(0, 4)}...{sub.wallet_address.slice(-4)}
+                                  </TableCell>
+                                  <TableCell>
+                                    <a href={sub.post_link} target="_blank" rel="noopener noreferrer" className="text-red-500 underline hover:text-red-400 text-sm">
+                                      View
+                                    </a>
+                                  </TableCell>
+                                  <TableCell className="font-display">
+                                    {sub.token_balance !== null ? Number(sub.token_balance).toLocaleString() : "—"}
+                                  </TableCell>
+                                  <TableCell className="font-body text-xs text-muted-foreground">
+                                    {new Date(sub.submitted_at).toLocaleDateString()}
+                                  </TableCell>
+                                </TableRow>
+                              ))}
+                            </TableBody>
+                          </Table>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 )}
               </div>
@@ -552,84 +594,50 @@ const BannerContest = () => {
                 <p className="font-body italic text-muted-foreground text-sm mb-4">
                   Submit your Entry in the <a href="https://x.com/i/communities/1960729088890691700" target="_blank" rel="noopener noreferrer" className="text-red-500 underline hover:text-red-400 transition-colors">Community</a> first!
                 </p>
-                <form onSubmit={handleSubmitEntry} className="space-y-4 text-left max-w-md mx-auto">
-                  <div className="space-y-2">
-                    <Label className="text-foreground font-body text-sm">Solana Wallet Address</Label>
-                    <Input
-                      type="text"
-                      placeholder="Your Solana wallet address"
-                      value={subWallet}
-                      onChange={(e) => setSubWallet(e.target.value)}
-                      required
-                    />
+                {submitted ? (
+                  <div className="py-8">
+                    <p className="font-display text-2xl text-foreground">Thank you for submitting!</p>
                   </div>
-                  <div className="space-y-2">
-                    <Label className="text-foreground font-body text-sm">X Handle</Label>
-                    <Input
-                      type="text"
-                      placeholder="@yourhandle"
-                      value={subXHandle}
-                      onChange={(e) => setSubXHandle(e.target.value)}
-                      required
-                    />
-                    <p className="text-xs text-muted-foreground">Submit as "@yourhandle" (must start with @)</p>
-                  </div>
-                  <div className="space-y-2">
-                    <Label className="text-foreground font-body text-sm">Link to Post</Label>
-                    <Input
-                      type="url"
-                      placeholder="https://x.com/..."
-                      value={subPostLink}
-                      onChange={(e) => setSubPostLink(e.target.value)}
-                      required
-                    />
-                  </div>
-                  <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting}>
-                    {submitting ? "Submitting..." : "Submit Entry"}
-                  </Button>
-                </form>
+                ) : (
+                  <form onSubmit={handleSubmitEntry} className="space-y-4 text-left max-w-md mx-auto">
+                    <div className="space-y-2">
+                      <Label className="text-foreground font-body text-sm">Solana Wallet Address</Label>
+                      <Input
+                        type="text"
+                        placeholder="Your Solana wallet address"
+                        value={subWallet}
+                        onChange={(e) => setSubWallet(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-foreground font-body text-sm">X Handle</Label>
+                      <Input
+                        type="text"
+                        placeholder="@yourhandle"
+                        value={subXHandle}
+                        onChange={(e) => setSubXHandle(e.target.value)}
+                        required
+                      />
+                      <p className="text-xs text-muted-foreground">Submit as "@yourhandle" (must start with @)</p>
+                    </div>
+                    <div className="space-y-2">
+                      <Label className="text-foreground font-body text-sm">Link to Post</Label>
+                      <Input
+                        type="url"
+                        placeholder="https://x.com/..."
+                        value={subPostLink}
+                        onChange={(e) => setSubPostLink(e.target.value)}
+                        required
+                      />
+                    </div>
+                    <Button type="submit" variant="hero" size="lg" className="w-full" disabled={submitting}>
+                      {submitting ? "Submitting..." : "Submit Entry"}
+                    </Button>
+                  </form>
+                )}
               </div>
 
-              {/* Submissions Table */}
-              {submissions.length > 0 && (
-                <div className="border-t border-border pt-6">
-                  <h2 className="font-display text-xl sm:text-2xl text-foreground mb-4">Submissions</h2>
-                  <div className="overflow-x-auto">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead>X Handle</TableHead>
-                          <TableHead>Wallet</TableHead>
-                          <TableHead>Post</TableHead>
-                          <TableHead>$BUCK Balance</TableHead>
-                          <TableHead>Submitted</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {submissions.map((sub) => (
-                          <TableRow key={sub.id}>
-                            <TableCell className="font-body">{sub.x_handle}</TableCell>
-                            <TableCell className="font-body text-xs">
-                              {sub.wallet_address.slice(0, 4)}...{sub.wallet_address.slice(-4)}
-                            </TableCell>
-                            <TableCell>
-                              <a href={sub.post_link} target="_blank" rel="noopener noreferrer" className="text-red-500 underline hover:text-red-400 text-sm">
-                                View
-                              </a>
-                            </TableCell>
-                            <TableCell className="font-display">
-                              {sub.token_balance !== null ? Number(sub.token_balance).toLocaleString() : "—"}
-                            </TableCell>
-                            <TableCell className="font-body text-xs text-muted-foreground">
-                              {new Date(sub.submitted_at).toLocaleDateString()}
-                            </TableCell>
-                          </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                </div>
-              )}
             </div>
 
           </div>
