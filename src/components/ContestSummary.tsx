@@ -93,7 +93,9 @@ export const ContestSummary = () => {
   return (
     <section className="px-3 sm:px-4 py-8 sm:py-12">
       <div className="max-w-3xl mx-auto text-center space-y-6">
-        <h2 className="font-display text-3xl sm:text-4xl text-foreground">Weekly Contest</h2>
+        <a href="/contest" className="font-display text-3xl sm:text-4xl text-foreground hover:text-muted-foreground transition-colors">
+          <h2>Weekly Contest</h2>
+        </a>
 
         {/* Countdown Animation */}
         <div className="flex justify-center">
