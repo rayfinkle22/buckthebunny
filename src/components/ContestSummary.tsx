@@ -141,7 +141,7 @@ export const ContestSummary = () => {
 
         {/* Link to full contest page */}
         <a
-          href="/banner-contest"
+          href="/contest"
           className="inline-block font-body text-sm text-foreground underline hover:text-muted-foreground transition-colors"
         >
           View Full Contest Rules →
