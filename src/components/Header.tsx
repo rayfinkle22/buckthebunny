@@ -10,7 +10,7 @@ const navItems = [
   { id: "pumpfun", label: "Pump.fun", icon: Rocket, href: `https://pump.fun/coin/${TOKEN_ADDRESS}` },
   { id: "official-x", label: "Official", icon: null, href: "https://x.com/itsbuckthebunny" },
   { id: "x-community", label: "Community", icon: null, href: "https://x.com/i/communities/1960729088890691700" },
-  { id: "banner-contest", label: "Weekly Contest", icon: ImageIcon, href: "/banner-contest", isInternal: true },
+  { id: "contest", label: "Weekly Contest", icon: ImageIcon, href: "/contest", isInternal: true },
   { id: "legal", label: "Legal", icon: Scale, href: "/legal", isInternal: true },
 ];
 
