@@ -4,7 +4,7 @@ import { Footer } from "@/components/Footer";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, Trash2 } from "lucide-react";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import buckEmoji from "@/assets/buck-emoji.png";
 import { CountdownVideo } from "@/components/CountdownVideo";
@@ -499,7 +499,33 @@ const BannerContest = () => {
                     {submissions.length > 0 && (
                       <div className="border-t border-border pt-4 mt-4">
                         <h4 className="font-display text-base text-foreground mb-3">Submissions ({submissions.length})</h4>
-                        <div className="overflow-x-auto">
+                        <div className="space-y-3 sm:hidden">
+                          {submissions.map((sub) => (
+                            <div key={sub.id} className="bg-background border border-border rounded-lg p-3 text-left text-sm space-y-1">
+                              <div className="flex justify-between items-start">
+                                <span className="font-body font-semibold text-foreground">{sub.x_handle}</span>
+                                <button
+                                  onClick={async () => {
+                                    if (!confirm(`Delete ${sub.x_handle}?`)) return;
+                                    const { error } = await supabase.from("contest_submissions").delete().eq("id", sub.id);
+                                    if (error) toast({ title: "Error", description: error.message, variant: "destructive" });
+                                    else fetchSubmissions();
+                                  }}
+                                  className="text-destructive hover:text-destructive/80 transition-colors p-1"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </button>
+                              </div>
+                              <p className="font-body text-xs text-muted-foreground">{sub.wallet_address.slice(0, 4)}...{sub.wallet_address.slice(-4)}</p>
+                              <div className="flex justify-between items-center">
+                                <a href={sub.post_link} target="_blank" rel="noopener noreferrer" className="text-red-500 underline hover:text-red-400 text-xs">View Post</a>
+                                <span className="font-display text-xs">{sub.token_balance !== null ? Number(sub.token_balance).toLocaleString() : "—"} $BUCK</span>
+                              </div>
+                              <p className="font-body text-xs text-muted-foreground">{new Date(sub.submitted_at).toLocaleDateString()}</p>
+                            </div>
+                          ))}
+                        </div>
+                        <div className="overflow-x-auto hidden sm:block">
                           <Table>
                             <TableHeader>
                               <TableRow>
@@ -508,6 +534,7 @@ const BannerContest = () => {
                                 <TableHead>Post</TableHead>
                                 <TableHead>$BUCK Balance</TableHead>
                                 <TableHead>Submitted</TableHead>
+                                <TableHead></TableHead>
                               </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -527,6 +554,19 @@ const BannerContest = () => {
                                   </TableCell>
                                   <TableCell className="font-body text-xs text-muted-foreground">
                                     {new Date(sub.submitted_at).toLocaleDateString()}
+                                  </TableCell>
+                                  <TableCell>
+                                    <button
+                                      onClick={async () => {
+                                        if (!confirm(`Delete submission from ${sub.x_handle}?`)) return;
+                                        const { error } = await supabase.from("contest_submissions").delete().eq("id", sub.id);
+                                        if (error) toast({ title: "Error", description: error.message, variant: "destructive" });
+                                        else fetchSubmissions();
+                                      }}
+                                      className="text-destructive hover:text-destructive/80 transition-colors p-1"
+                                    >
+                                      <Trash2 className="w-4 h-4" />
+                                    </button>
                                   </TableCell>
                                 </TableRow>
                               ))}
