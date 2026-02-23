@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import countdownVideo from "@/assets/countdown-animation.mp4";
 
 export const CountdownVideo = ({ className = "" }: { className?: string }) => {
   const [loaded, setLoaded] = useState(false);
+  const [ended, setEnded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   return (
     <div className={`relative ${className}`}>
@@ -12,14 +14,16 @@ export const CountdownVideo = ({ className = "" }: { className?: string }) => {
         </div>
       )}
       <video
+        ref={videoRef}
         src={countdownVideo}
         autoPlay
-        loop
         muted
         playsInline
         preload="auto"
         onCanPlay={() => setLoaded(true)}
-        className={`w-full rounded-xl transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
+        onEnded={() => setEnded(true)}
+        className={`w-full rounded-xl transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"} ${ended ? "pause" : ""}`}
+        style={ended ? { display: "block" } : undefined}
       />
     </div>
   );
